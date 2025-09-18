@@ -1,0 +1,328 @@
+1
+00:00:01,790 --> 00:00:07,350
+In the last video, we have set up our flesh asset for a coupled muscle and fat simulation.
+
+2
+00:00:07,910 --> 00:00:10,970
+Let's go ahead and set up our simulation parameters over here.
+
+3
+00:00:11,790 --> 00:00:19,810
+First, let's go to asset details and then set your skeletal mesh, and in this case, want to use the bones here.
+
+4
+00:00:21,310 --> 00:00:30,630
+Again, at this point, you should make sure the underlying skeleton here in the skeletal mesh agrees with the one you used to set up the asset.
+
+5
+00:00:30,630 --> 00:00:40,490
+You can check the transform source and then check the name of the attribute.
+
+6
+00:00:41,170 --> 00:00:47,230
+Here, you have the sk underscore email underscore muscles, which is that.
+
+7
+00:00:48,370 --> 00:00:50,370
+Now, let's go to preview scene.
+
+8
+00:00:51,330 --> 00:00:57,630
+For a detailed explanation of the parameters, you can review the muscle simulation video.
+
+9
+00:00:59,210 --> 00:01:02,290
+Right now, we'll just quickly go through the parameters here.
+
+10
+00:01:02,290 --> 00:01:09,510
+For this example, let's use 20 subsets and 20 iterations.
+
+11
+00:01:11,430 --> 00:01:20,490
+Because this simulation has more layers than just the muscles, it contains the fat layer, which relies on the movement of the muscles.
+
+12
+00:01:21,110 --> 00:01:26,710
+And that means the deformation on the muscles need to propagate all the way to the fat layer.
+
+13
+00:01:26,970 --> 00:01:29,070
+And that requires more solver iterations.
+
+14
+00:01:31,830 --> 00:01:36,670
+Next, let's go ahead and check the quad aesthetics, because we're running a quad aesthetics simulation.
+
+15
+00:01:36,670 --> 00:01:40,130
+Let's turn on fuller, for collision.
+
+16
+00:01:43,550 --> 00:01:50,870
+And over here, we're going to use the Gauss-Seidel solver, because this is designed for quad aesthetics.
+
+17
+00:01:53,970 --> 00:01:56,670
+For now, we're turning off the spring collision.
+
+18
+00:01:56,670 --> 00:02:00,930
+Because the collision scenario is pretty complicated if you turn that on.
+
+19
+00:02:01,510 --> 00:02:06,970
+And that checks collisions against every single connected geometry group.
+
+20
+00:02:07,830 --> 00:02:11,650
+We mostly want collisions between the outside of the fat layer only.
+
+21
+00:02:12,030 --> 00:02:13,410
+For example, at the elbow.
+
+22
+00:02:14,430 --> 00:02:17,810
+We'll support this type of collision in the 5.6 release.
+
+23
+00:02:18,830 --> 00:02:20,530
+So for now, let's skip that.
+
+24
+00:02:25,190 --> 00:02:30,590
+Let's turn off gravity, because that's currently incompatible with the Gauss-Seidel solver.
+
+25
+00:02:33,570 --> 00:02:41,230
+And make sure you have the do muscle activation on, so that the pain in muscles, the bicep, and the lower pectoralis can contract.
+
+26
+00:02:43,990 --> 00:02:49,610
+For this simulation, let's set the other animation, which is the range of motion animation.
+
+27
+00:02:53,740 --> 00:02:57,380
+Coming down here, let's set a new cache collection.
+
+28
+00:03:04,110 --> 00:03:07,850
+Let me name this one the fat chaos cache collection.
+
+29
+00:03:09,030 --> 00:03:12,110
+Let's run a little bit longer sim.
+
+30
+00:03:13,390 --> 00:03:17,210
+Let's run 5 seconds at 30 frames per second.
+
+31
+00:03:17,530 --> 00:03:20,670
+So 150 frames in total.
+
+32
+00:03:23,910 --> 00:03:28,190
+So now let's hit that red record button to start a simulation.
+
+33
+00:03:29,270 --> 00:03:35,590
+Once you hit that, the solver should start running in the background for some initial setups of the simulation.
+
+34
+00:03:35,970 --> 00:03:39,130
+And then you should be able to see a notification window soon.
+
+35
+00:03:41,550 --> 00:03:47,510
+Because we have more vertices in the simulation, this should take more time in general.
+
+36
+00:03:47,510 --> 00:03:51,970
+And also we're using a higher number of sub steps and iterations.
+
+37
+00:03:54,090 --> 00:03:59,290
+We'll wait for 2 frames to finish and then come back later.
+
+38
+00:04:02,580 --> 00:04:06,780
+The whole simulation took about 30 minutes to run, and we just got back the results.
+
+39
+00:04:07,200 --> 00:04:10,880
+Let's go ahead and hit play to start viewing the simulation.
+
+40
+00:04:11,460 --> 00:04:17,240
+Pay attention to the lower pectoralis there, as it's contracting with the arms coming down.
+
+41
+00:04:25,720 --> 00:04:32,180
+Now that we have a simulation of the fat, let's transfer the deformation on the fat onto the skin.
+
+42
+00:04:32,840 --> 00:04:34,920
+Because that's what we'll see eventually.
+
+43
+00:04:35,540 --> 00:04:39,200
+We can embed the skin into the fat tetrahedral mesh,
+
+44
+00:04:39,400 --> 00:04:43,740
+baryocentrically, and interpolate the skin from the simulation results.
+
+45
+00:04:46,200 --> 00:04:53,560
+So let's go ahead and get back to the data photograph and create a new node called generate surface bindings.
+
+46
+00:04:58,350 --> 00:05:04,130
+What this node does is that it takes either a static mesh or a skeletal mesh.
+
+47
+00:05:04,630 --> 00:05:08,690
+Again, there is our skin, coarse, fixed, blend.
+
+48
+00:05:11,210 --> 00:05:14,310
+And then we want to make sure that we connect that to the collection.
+
+49
+00:05:14,610 --> 00:05:18,130
+So in this case, we want to embed it to the fat layer only.
+
+50
+00:05:18,430 --> 00:05:22,090
+So remember, we got the fat layer from here, get flesh asset.
+
+51
+00:05:22,090 --> 00:05:25,050
+So we can safely do it here.
+
+52
+00:05:27,670 --> 00:05:29,270
+Now it's evaluating.
+
+53
+00:05:29,610 --> 00:05:30,610
+It's finished.
+
+54
+00:05:31,050 --> 00:05:32,810
+And then connect the collection back in.
+
+55
+00:05:35,790 --> 00:05:39,510
+Remember all the baryocentric data stored here,
+
+56
+00:05:39,710 --> 00:05:44,630
+will be automatically updated through append tetrahedral collection.
+
+57
+00:05:44,630 --> 00:05:50,070
+So eventually, you will have the right information on the appended collection.
+
+58
+00:05:53,660 --> 00:05:57,700
+In this node, there is also the option of do surface projection.
+
+59
+00:05:58,320 --> 00:06:04,180
+Remember, not all the time that the skin will be fully inside the fat layer.
+
+60
+00:06:04,620 --> 00:06:10,360
+In this scenario that the skin is slightly outside of the tetrahedral mesh,
+
+61
+00:06:10,540 --> 00:06:16,680
+then we want to embed the skin onto the surface of the tetrahedral mesh and provide an offset.
+
+62
+00:06:16,680 --> 00:06:17,260
+vector.
+
+63
+00:06:17,720 --> 00:06:24,540
+So make sure that you leave this on to embed those outside, slightly outside vertices.
+
+64
+00:06:27,460 --> 00:06:34,320
+Now, with this set, we can go ahead and then set up the geometry cache generation.
+
+65
+00:06:36,120 --> 00:06:41,820
+Over here, embedded skeletal mesh, make sure that this takes the same skeletal mesh as over here,
+
+66
+00:06:42,020 --> 00:06:43,080
+which is the skin.
+
+67
+00:06:43,880 --> 00:06:45,300
+Let's go ahead and set that.
+
+68
+00:06:46,680 --> 00:06:53,000
+For geometry cache, let's go ahead and click this new geometry cache button and create a new geometry cache.
+
+69
+00:06:53,960 --> 00:06:55,040
+Click save.
+
+70
+00:06:56,080 --> 00:07:00,120
+Now that these two are set, we're ready to generate our geometry cache.
+
+71
+00:07:00,400 --> 00:07:04,360
+Just click this button to generate geometry cache.
+
+72
+00:07:08,070 --> 00:07:09,150
+Now that it's running.
+
+73
+00:07:14,650 --> 00:07:21,770
+This should be much faster than the simulation because we're only reading the simulation results and interpolating the skin positions from that.
+
+74
+00:07:22,910 --> 00:07:25,910
+We can open up the geometry cache to view the results.
+
+75
+00:07:26,210 --> 00:07:27,590
+Let's go ahead and double click that.
+
+76
+00:07:34,470 --> 00:07:36,190
+There is our skin.
+
+77
+00:07:37,510 --> 00:07:44,580
+Then we can play and pay attention to that lower pectoralis there.
+
+78
+00:07:44,940 --> 00:07:48,720
+As you can see, the deformation from the fat layer is transferred onto that.
+
+79
+00:07:48,900 --> 00:07:51,920
+And you can see some obvious muscle contraction on the skin now.
+
+80
+00:08:00,190 --> 00:08:04,790
+So as a recap, we run a quasi-static simulation of the muscles and fat layer.
+
+81
+00:08:05,410 --> 00:08:09,530
+We generated a geometry cache of the skin from the simulation results.
+
+82
+00:08:09,530 --> 00:08:22,910
+In the next video, we'll use the geometry cache to train an ML deformer on the skin so that we can apply real-time correctives on the character skin with physics and biomechanics enhanced.
+

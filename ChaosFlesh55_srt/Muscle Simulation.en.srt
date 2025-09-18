@@ -1,0 +1,432 @@
+1
+00:00:02,560 --> 00:00:10,540
+In the last video we've computed muscle activation data. We have set up some kinematic constraints between muscle and bones.
+
+2
+00:00:10,780 --> 00:00:14,720
+We also have weak constraints between muscle and muscles.
+
+3
+00:00:15,580 --> 00:00:30,920
+So before we get to simulation, let's add one final node that will transfer the skin weight from the skeletal mesh onto the tetrahedral mesh so that we can better kinematically constrain the vertices.
+
+4
+00:00:33,700 --> 00:00:37,140
+The node that we'll be using is transverse vertex skin weights.
+
+5
+00:00:40,330 --> 00:00:41,990
+We can connect collection there.
+
+6
+00:00:42,630 --> 00:00:47,310
+And then we'll get the skin weights from the skeletal mesh collection.
+
+7
+00:00:51,680 --> 00:00:53,660
+Let's get skeletal mesh 2 collection.
+
+8
+00:00:54,820 --> 00:00:57,700
+And over here we can select the muscles.
+
+9
+00:01:00,840 --> 00:01:01,800
+Start muscles.
+
+10
+00:01:02,860 --> 00:01:05,160
+We can check under vertices here
+
+11
+00:01:09,370 --> 00:01:13,690
+that it's got some skin weights over here.
+
+12
+00:01:14,210 --> 00:01:15,510
+Bone weight index.
+
+13
+00:01:16,170 --> 00:01:17,230
+And then bone weights.
+
+14
+00:01:22,140 --> 00:01:23,260
+So connect that.
+
+15
+00:01:27,910 --> 00:01:30,350
+And then connect to flesh acid terminal.
+
+16
+00:01:32,390 --> 00:01:33,330
+Save this.
+
+17
+00:01:33,610 --> 00:01:36,250
+And then over here in the simulation viewport.
+
+18
+00:01:36,950 --> 00:01:37,670
+Press F.
+
+19
+00:01:38,670 --> 00:01:39,530
+Zoom in here.
+
+20
+00:01:40,390 --> 00:01:41,930
+See that's our muscle geometry.
+
+21
+00:01:44,750 --> 00:01:48,250
+To start running simulation, there are a couple things we want to set up here.
+
+22
+00:01:49,150 --> 00:01:53,010
+First of all, go to asset details and then give a skeletal mesh.
+
+23
+00:01:55,250 --> 00:01:58,050
+In this case, we'll be using bone skeletal mesh.
+
+24
+00:01:59,910 --> 00:02:01,330
+So now we can see the bones as well.
+
+25
+00:02:03,790 --> 00:02:06,330
+That will automatically set up the skeleton here.
+
+26
+00:02:08,390 --> 00:02:09,970
+Then go to preview scene.
+
+27
+00:02:10,750 --> 00:02:12,010
+We want to check a few things.
+
+28
+00:02:13,010 --> 00:02:19,210
+For the purpose of this tutorial, we want to generate a high resolution muscle stimulation.
+
+29
+00:02:19,610 --> 00:02:20,890
+Later on, we'll get to that.
+
+30
+00:02:21,110 --> 00:02:22,270
+But right now, muscle stimulation.
+
+31
+00:02:22,270 --> 00:02:32,790
+And then we'll want to use eventually a geometry cache of the skin that we can embed into the fat simulation.
+
+32
+00:02:33,190 --> 00:02:35,090
+So that we can train an ML deformer.
+
+33
+00:02:35,570 --> 00:02:38,570
+However, an ML deformer uses quality static data.
+
+34
+00:02:38,750 --> 00:02:42,150
+So make sure we don't have any dynamics in that.
+
+35
+00:02:43,690 --> 00:02:47,150
+So make sure you have this do quality static box checked.
+
+36
+00:02:49,630 --> 00:02:54,930
+For quality static, it's very recommended to use the Gauss-Stadel constraints.
+
+37
+00:02:56,770 --> 00:02:58,710
+So make sure you have that checked.
+
+38
+00:02:59,090 --> 00:03:04,870
+Gauss-Stadel solver is the solver we designed specifically for quality static.
+
+39
+00:03:05,170 --> 00:03:08,630
+It's also pretty stable under low computational budgets.
+
+40
+00:03:12,740 --> 00:03:20,060
+Sor is another parameter that will generally accelerate the solver.
+
+41
+00:03:20,060 --> 00:03:28,280
+But that also means it will add some more instability to the solver.
+
+42
+00:03:28,400 --> 00:03:33,580
+So if you're seeing your sim going unstable, maybe check off that box.
+
+43
+00:03:34,960 --> 00:03:36,340
+For now, we'll leave it on.
+
+44
+00:03:39,160 --> 00:03:42,980
+We can also do collisions here by checking the do sprint collision box.
+
+45
+00:03:44,140 --> 00:03:49,480
+This is only valid if you have the Gauss-Stadel constraint turned on.
+
+46
+00:03:50,740 --> 00:03:54,100
+In this case, we do want to see some muscle collisions between muscles.
+
+47
+00:03:56,780 --> 00:03:58,120
+So we'll leave that on.
+
+48
+00:03:58,500 --> 00:04:00,420
+And then the search radius.
+
+49
+00:04:01,560 --> 00:04:04,420
+For this example, let's put 0.4.
+
+50
+00:04:04,800 --> 00:04:06,980
+And then the specificness of 10.
+
+51
+00:04:09,180 --> 00:04:11,740
+We want to allow muscles sliding against each other.
+
+52
+00:04:11,740 --> 00:04:14,160
+So check that and apply it with full lunch.
+
+53
+00:04:17,710 --> 00:04:20,230
+For the quadricetic example, let's turn off gravity for now.
+
+54
+00:04:20,530 --> 00:04:26,030
+You can leave this on if you want gravity in your quadricetic simulation data.
+
+55
+00:04:30,070 --> 00:04:32,430
+Last thing is do muscle activation.
+
+56
+00:04:32,910 --> 00:04:43,290
+If you check that, we'll be able to see some muscle contractions on the muscles obtained, which is the pectoralis, the left pec, and then the left bicep.
+
+57
+00:04:45,110 --> 00:04:51,490
+The animation asset over here will be using the left weight, which is the bicep curl animation.
+
+58
+00:04:57,150 --> 00:04:58,990
+We'll leave other things than it is for now.
+
+59
+00:04:59,230 --> 00:05:00,110
+And then cache collection.
+
+60
+00:05:00,350 --> 00:05:02,410
+We want to be able to cache our muscle stimulation.
+
+61
+00:05:22,240 --> 00:05:25,880
+Once you have the collection selected, you should be able to see a score bar.
+
+62
+00:05:26,220 --> 00:05:29,880
+Now that's just showing you the plane animation on the skeleton.
+
+63
+00:05:30,860 --> 00:05:32,580
+We don't have anything simmed yet.
+
+64
+00:05:36,310 --> 00:05:48,490
+So for this example, that's actually sim, say 90 frames, which means 30 seconds or 3 seconds of the animation under frame rate 30.
+
+65
+00:05:51,050 --> 00:05:53,790
+You can have async caching selected.
+
+66
+00:05:53,970 --> 00:06:01,630
+That means when you're running your sim, you'll still be able to edit your data flow graph on a different thread.
+
+67
+00:06:03,610 --> 00:06:06,830
+Scalculable mesh visibility, this controls whether you can see the scalculable mesh.
+
+68
+00:06:06,950 --> 00:06:09,990
+Sometimes you don't want to see the scalculable mesh because it's blocking video.
+
+69
+00:06:10,310 --> 00:06:11,730
+In this case, we want to turn it on.
+
+70
+00:06:13,870 --> 00:06:21,950
+That's pretty much it, except we have some simulation properties here.
+
+71
+00:06:22,190 --> 00:06:24,550
+We have a number of subsets and a number of solver iterations.
+
+72
+00:06:24,970 --> 00:06:32,410
+Basically, these are the solver properties you want to fine-tune whenever you see your sim going in.
+
+73
+00:06:32,570 --> 00:06:35,570
+Either too expensive or became unstable.
+
+74
+00:06:37,410 --> 00:06:45,590
+For our case, you can use a couple more subsets, say 10 subsets and then 10 solver iterations.
+
+75
+00:06:49,610 --> 00:06:54,870
+Generally, if you're doing collisions, you can also use more subsets.
+
+76
+00:06:55,150 --> 00:07:03,630
+That will improve collisions because eventually for each smaller subset, you're moving very little distance.
+
+77
+00:07:03,990 --> 00:07:06,870
+That will help the collision detection process.
+
+78
+00:07:09,390 --> 00:07:14,550
+So now we can save the asset and start running the simulation that you can just record.
+
+79
+00:07:18,430 --> 00:07:22,250
+That should be this window over here tracking the progress of the simulation.
+
+80
+00:07:28,750 --> 00:07:30,910
+Here we have finished our muscle simulation.
+
+81
+00:07:31,450 --> 00:07:34,910
+You can track the score bar to check the simulation results.
+
+82
+00:07:38,000 --> 00:07:40,040
+Let's go to here and then make it brighter.
+
+83
+00:07:42,640 --> 00:07:44,380
+We can zoom in on the bicep.
+
+84
+00:07:45,200 --> 00:07:47,940
+See muscle clasions and muscle contraction there.
+
+85
+00:07:52,800 --> 00:08:02,360
+One final thing of this video is that we want to be able to see the colors on the original tetraketal mesh.
+
+86
+00:08:03,920 --> 00:08:08,500
+To do that, let's go to our blueprint over here.
+
+87
+00:08:10,740 --> 00:08:13,920
+Click this button to browse asset in content browser.
+
+88
+00:08:14,840 --> 00:08:18,100
+Then take us to this blueprint class.
+
+89
+00:08:18,980 --> 00:08:20,100
+Double click that.
+
+90
+00:08:20,100 --> 00:08:20,180
+Like that.
+
+91
+00:08:21,760 --> 00:08:31,760
+And then over here in the construction script, drag it and then create a set material for flesh component.
+
+92
+00:08:38,050 --> 00:08:43,030
+This will set the material on our flesh component, which is the tetraketal mesh.
+
+93
+00:08:44,690 --> 00:08:48,010
+The material will give that the data flow for the next material.
+
+94
+00:08:51,240 --> 00:08:52,460
+Make sure to compile.
+
+95
+00:08:53,860 --> 00:08:55,760
+Then save the print.
+
+96
+00:08:59,820 --> 00:09:01,740
+Check this box and make it writable.
+
+97
+00:09:04,040 --> 00:09:06,280
+Now you can see the colors there.
+
+98
+00:09:25,700 --> 00:09:27,500
+Select twitch on the skeleton.
+
+99
+00:09:28,640 --> 00:09:32,140
+See if you can get rid of this by reopening the flesh asset.
+
+100
+00:09:37,100 --> 00:09:45,800
+Every time you close and reopen a flesh asset, it forces you to reevaluate all the data flow nodes in the flesh asset.
+
+101
+00:09:46,080 --> 00:09:47,220
+Just keep that in mind.
+
+102
+00:09:50,700 --> 00:09:51,640
+Over here.
+
+103
+00:09:52,000 --> 00:09:57,020
+Now we can view the muscle simulation results here.
+
+104
+00:10:04,970 --> 00:10:14,190
+To disable the colors here, let's move our transfer color node to the very end.
+
+105
+00:10:14,190 --> 00:10:18,730
+So that we only see the muscle original colors.
+
+106
+00:10:33,740 --> 00:10:34,740
+There we go.
+
+107
+00:10:36,040 --> 00:10:43,540
+Now our muscle color has overwritten the color from compute muscle fiber field.
+
+108
+00:10:51,220 --> 00:10:54,700
+There's also contraction on the peg as well.
+

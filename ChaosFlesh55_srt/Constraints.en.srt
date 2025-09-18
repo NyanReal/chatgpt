@@ -1,0 +1,360 @@
+1
+00:00:02,270 --> 00:00:06,990
+In the last video, we painted and transferred muscle origins and insertions.
+
+2
+00:00:07,290 --> 00:00:12,930
+We also computed muscle fiber field and other data that's related to muscle contraction.
+
+3
+00:00:13,790 --> 00:00:19,150
+Let's define some constraints that will drive the tetrahedral mesh during the simulation.
+
+4
+00:00:19,990 --> 00:00:29,830
+Our muscle simulation uses an inside-out approach, meaning that the animated bones will drive the muscles and also then the fat layer.
+
+5
+00:00:30,590 --> 00:00:32,210
+Let's bring in the bones.
+
+6
+00:00:35,050 --> 00:00:37,510
+Create a new skeletal mesh node.
+
+7
+00:00:40,960 --> 00:00:42,860
+Let's set that to be the bones.
+
+8
+00:00:48,440 --> 00:00:51,960
+Let's go ahead and convert that to a collection so that we can visualize it.
+
+9
+00:00:56,720 --> 00:00:59,940
+Now we can see there's the bones of the character.
+
+10
+00:01:04,020 --> 00:01:08,160
+Let's select both nodes so that we can see both the muscles and the bones.
+
+11
+00:01:16,310 --> 00:01:23,530
+We'll first create some kinematic constraints to constrain the muscle attachments to the bones.
+
+12
+00:01:24,310 --> 00:01:33,470
+The definition of a kinematic constraint is that the position of the kinematic vertex will be linearly skinned during the simulation.
+
+13
+00:01:34,850 --> 00:01:44,190
+The motion of the simulation is mostly driven by kinematic constraints that move according to the joint transforms from each frame of the animation.
+
+14
+00:01:45,790 --> 00:01:52,570
+Let's go ahead and create a new node called kinematic muscle attachments.
+
+15
+00:01:56,540 --> 00:02:03,280
+This node will kinematic bind muscle attachments, which is the muscle origins insertions that we just painted.
+
+16
+00:02:04,800 --> 00:02:09,220
+And then kinematic bind them to the skeletal mesh, which is the bone.
+
+17
+00:02:10,960 --> 00:02:15,460
+So connect collections and also the origins insertion indices.
+
+18
+00:02:20,960 --> 00:02:23,660
+And also give the skeletal mesh of the bones here.
+
+19
+00:02:26,480 --> 00:02:34,840
+Now we can visualize the kinematic attachments through a visualize kinematic faces node.
+
+20
+00:02:39,800 --> 00:02:47,420
+Now with that node selected, you can see these are the kinematic faces that's created from this node.
+
+21
+00:02:49,120 --> 00:02:56,260
+I do want to point out that this does not see any internal vertices and can only be used for a rough estimation.
+
+22
+00:02:58,440 --> 00:03:03,700
+Next, let's kinematically constrain some muscle vertices that are close to bones.
+
+23
+00:03:06,180 --> 00:03:15,820
+The node that we use is set flesh bone position target binding.
+
+24
+00:03:18,930 --> 00:03:22,570
+For the skeletal binding mode here, let's select kinematic.
+
+25
+00:03:22,990 --> 00:03:26,650
+Because we're creating kinematic constraints between muscle and bones.
+
+26
+00:03:27,750 --> 00:03:36,350
+And vertex radius ratio controls the search radius between muscle and bones.
+
+27
+00:03:36,570 --> 00:03:41,950
+So that the muscle vertices that's close to the bones are being constrained.
+
+28
+00:03:44,350 --> 00:03:53,330
+Here 0.001 means this is only 0.1% of the largest side of the bounding box of the collection.
+
+29
+00:03:53,810 --> 00:04:02,270
+So think about the bounding box of this muscle geometry being the distance from the left hand to the right hand.
+
+30
+00:04:02,490 --> 00:04:05,150
+So that's 0.1 of that distance.
+
+31
+00:04:05,390 --> 00:04:08,910
+It's being used as the search radius for creating that constraint.
+
+32
+00:04:13,190 --> 00:04:16,090
+Alternatively, there's also the position target mode.
+
+33
+00:04:17,170 --> 00:04:20,730
+A position target, or sometimes I can call it a weak constraint,
+
+34
+00:04:21,050 --> 00:04:25,470
+is basically a spring connecting two sets of vertices.
+
+35
+00:04:26,030 --> 00:04:28,250
+For example, a vertex to vertex,
+
+36
+00:04:28,470 --> 00:04:32,110
+or a vertex to a barycentric point in a triangle.
+
+37
+00:04:32,970 --> 00:04:38,410
+The distance between the source position and the target position will be penalized during the solver evolution.
+
+38
+00:04:39,090 --> 00:04:42,630
+The main difference between a weak constraint and the kinematic constraint
+
+39
+00:04:43,430 --> 00:04:48,230
+is that a weak constraint is allowed to be off from its target position.
+
+40
+00:04:49,470 --> 00:04:54,970
+And the strength of the spring can be set through the stiffness parameter here, for example.
+
+41
+00:04:56,450 --> 00:04:59,230
+Now let's go ahead and set the skeletal mesh here.
+
+42
+00:05:00,390 --> 00:05:04,310
+We'll assign the same bone skeletal mesh here.
+
+43
+00:05:05,910 --> 00:05:11,490
+In this example, let's set the vertex radius ratio to be 0.005.
+
+44
+00:05:15,560 --> 00:05:18,660
+And now we can move visualized kinematic faces here.
+
+45
+00:05:20,680 --> 00:05:24,560
+So that you will see more kinematic faces.
+
+46
+00:05:26,180 --> 00:05:29,600
+These are the vertices or faces from muscles.
+
+47
+00:05:30,120 --> 00:05:32,560
+That's being kinematically constrained to bones.
+
+48
+00:05:35,640 --> 00:05:41,760
+Next, we'll also need some muscle-muscle constraints so that the muscle doesn't flop around during the simulation.
+
+49
+00:05:43,060 --> 00:05:53,350
+Let's go ahead and create a set vertex triangle position target binding.
+
+50
+00:05:57,100 --> 00:06:03,180
+This node creates point triangle springs between connected geometries.
+
+51
+00:06:03,500 --> 00:06:05,860
+In this case, between muscles.
+
+52
+00:06:07,060 --> 00:06:14,940
+Let's go ahead and set the vertex ratio to be 0.004.
+
+53
+00:06:15,320 --> 00:06:17,260
+And this stiffens to be 10.
+
+54
+00:06:20,060 --> 00:06:24,440
+The vertex radius ratio works the same way as the previous node.
+
+55
+00:06:28,810 --> 00:06:35,930
+Now we can visualize the weak constraints through visualize position target node.
+
+56
+00:06:38,390 --> 00:06:43,310
+You can go ahead and turn on the top right button here to render it.
+
+57
+00:06:44,010 --> 00:06:47,910
+Now you can see these are little line segments painted in red.
+
+58
+00:06:48,830 --> 00:06:50,870
+That represents the weak constraints.
+
+59
+00:06:53,150 --> 00:06:55,470
+So these are between muscles and muscles.
+
+60
+00:07:02,730 --> 00:07:05,350
+Now the next step here is optional.
+
+61
+00:07:06,950 --> 00:07:11,010
+At this point, we can check the skin weights of the kinematic vertices.
+
+62
+00:07:12,210 --> 00:07:14,230
+Let's go to vertices group.
+
+63
+00:07:17,380 --> 00:07:21,160
+And then near the end, we see bone weight index and bone weights.
+
+64
+00:07:22,980 --> 00:07:29,520
+These are the linear blend skinning weights that we'll use to skin the kinematic vertices.
+
+65
+00:07:31,140 --> 00:07:33,300
+You can see most of them are rigid.
+
+66
+00:07:34,500 --> 00:07:39,600
+Because you see a skin weight of one and then that's associated to only one transform.
+
+67
+00:07:40,800 --> 00:07:46,240
+If you have a better skinning on the skeletal mesh that you want to use,
+
+68
+00:07:46,480 --> 00:07:52,600
+you'll be able to transfer the skin weights from the skeletal mesh to the tetrahedral mesh now.
+
+69
+00:07:53,620 --> 00:08:00,200
+So let's go ahead and create a transfer skin weight, vertex skin weights node.
+
+70
+00:08:03,300 --> 00:08:08,360
+And then from collection, let's give that the skeletal mesh collection.
+
+71
+00:08:13,010 --> 00:08:15,710
+We have this muscle skeletal mesh collection here.
+
+72
+00:08:15,930 --> 00:08:17,810
+So let's connect that all the way here.
+
+73
+00:08:23,130 --> 00:08:30,590
+Note that this almost works exactly the same way as the transfer here, transfer vertex attribute.
+
+74
+00:08:30,910 --> 00:08:32,490
+So I'll skip the explanation here.
+
+75
+00:08:32,770 --> 00:08:41,070
+But note that this also only work if there's the same number of geometries between collection and from collection.
+
+76
+00:08:43,530 --> 00:08:45,970
+We'll fix that in 5.6.
+
+77
+00:08:49,340 --> 00:08:55,600
+So now, if you go to vertices, you can see now the bone weights changed.
+
+78
+00:08:56,060 --> 00:09:00,740
+They're more like a blend instead of the rigid skinning before.
+
+79
+00:09:02,880 --> 00:09:10,000
+So again, this step is optional in case you want to use the skin weights on the sculptal mesh, which is the muscles.
+
+80
+00:09:12,380 --> 00:09:14,940
+Lastly, let's create a flesh asset terminal.
+
+81
+00:09:16,740 --> 00:09:17,980
+We've seen this node.
+
+82
+00:09:18,180 --> 00:09:22,560
+We can now save the collection into the flesh asset here.
+
+83
+00:09:25,910 --> 00:09:32,890
+Now we should be able to see our flesh asset in the simulation viewport.
+
+84
+00:09:35,270 --> 00:09:39,930
+As a recap, now we define the kinematic constraints between muscles and bones.
+
+85
+00:09:40,310 --> 00:09:42,790
+We define weak constraints between muscles.
+
+86
+00:09:43,670 --> 00:09:46,610
+In the next video, we'll start simulating the muscles.
+
+87
+00:09:46,610 --> 00:09:46,650
+But there has been some Marcelinoids also to look at his Brockley Mock.
+
+88
+00:09:46,650 --> 00:09:46,750
+He's called the healer.
+
+89
+00:09:46,810 --> 00:09:46,890
+There tuvo me confidence in good au Memory.
+
+90
+00:09:46,890 --> 00:09:47,410
+And this is the second one.
+
