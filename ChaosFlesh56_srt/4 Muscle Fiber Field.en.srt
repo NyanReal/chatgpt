@@ -1,0 +1,376 @@
+1
+00:00:03,710 --> 00:00:10,450
+In the last video, we created constraints so that we can drive the muscles with an animated skeleton.
+
+2
+00:00:10,730 --> 00:00:20,010
+And we ran a simulation with that, you can see, but we noticed that the wrist is a little bit falling off.
+
+3
+00:00:20,550 --> 00:00:25,650
+So let's go ahead and increase the radius here so that we have more kinematic constraints.
+
+4
+00:00:26,930 --> 00:00:29,550
+So let's change that from 0.5 to 0.8.
+
+5
+00:00:30,230 --> 00:00:35,490
+Now we're ready to paint on muscle origin insertions.
+
+6
+00:00:36,730 --> 00:00:41,030
+Muscle origin insertions, they are muscle attachments to bones.
+
+7
+00:00:41,490 --> 00:00:43,210
+So basically think about the bicep here.
+
+8
+00:00:43,990 --> 00:00:46,930
+The muscle origin will be the one closer to the root.
+
+9
+00:00:47,330 --> 00:00:51,570
+And then muscle insertion will be the one far further away from the root.
+
+10
+00:00:51,750 --> 00:00:56,650
+So let's go ahead and bring in the sculptal mesh muscles so we can paint on it.
+
+11
+00:00:59,720 --> 00:01:00,840
+Let's grab the muscles.
+
+12
+00:01:02,800 --> 00:01:07,540
+And again, let's convert this to a sculptal mesh collection.
+
+13
+00:01:11,100 --> 00:01:16,780
+And now at this point, we can just click this paint weight map node to start painting on it.
+
+14
+00:01:17,620 --> 00:01:20,960
+And for the attribute, let's call this one origin.
+
+15
+00:01:23,890 --> 00:01:26,470
+We'll use two muscles as an example.
+
+16
+00:01:26,710 --> 00:01:29,910
+First, let's use the left lower pectoralis.
+
+17
+00:01:32,820 --> 00:01:35,260
+See, we'll have the painting tool here.
+
+18
+00:01:35,620 --> 00:01:37,660
+Let's go ahead and use poly lasso.
+
+19
+00:01:40,020 --> 00:01:41,380
+I think it looks good.
+
+20
+00:01:44,940 --> 00:01:51,160
+Because we're painting on the origin, be a little careful and draw the attachments.
+
+21
+00:01:52,920 --> 00:01:54,040
+Looks pretty good.
+
+22
+00:01:55,100 --> 00:01:57,700
+Also, let's paint it on the bicep.
+
+23
+00:02:03,000 --> 00:02:04,140
+That's a good amount.
+
+24
+00:02:04,620 --> 00:02:07,080
+Now let's do the same thing for insertion.
+
+25
+00:02:14,590 --> 00:02:16,630
+Let's work on the same muscles.
+
+26
+00:02:32,070 --> 00:02:37,250
+The reason that we're painting on the sculptal mesh instead of on the tetrahedral mesh is that
+
+27
+00:02:37,770 --> 00:02:39,930
+the sculptal mesh is not changing.
+
+28
+00:02:40,230 --> 00:02:46,550
+We're not changing this topology, but we could potentially change the topology of the tetrahedral
+
+29
+00:02:46,550 --> 00:02:46,850
+mesh.
+
+30
+00:02:46,850 --> 00:02:50,990
+So, once we paint on the sculptal mesh, we can always transfer
+
+31
+00:02:51,790 --> 00:02:54,910
+painting from the sculptal mesh to the tetrahedral mesh.
+
+32
+00:02:55,070 --> 00:02:56,590
+So, let's go ahead and do that right now.
+
+33
+00:03:00,050 --> 00:03:02,630
+Call this transfer vertex attribute node.
+
+34
+00:03:05,350 --> 00:03:09,130
+And make sure you connect from collection and also the attribute key.
+
+35
+00:03:11,090 --> 00:03:14,470
+We're going to do the same thing for insertions as well.
+
+36
+00:03:25,020 --> 00:03:29,480
+By the way, inside this transfer vertex attribute node here,
+
+37
+00:03:29,660 --> 00:03:32,740
+you can see we have different transfer modes.
+
+38
+00:03:33,020 --> 00:03:38,240
+In this case, we have an exact one-to-one match between the sculptal mesh geometry
+
+39
+00:03:38,860 --> 00:03:40,840
+and the tetrahedral mesh geometry.
+
+40
+00:03:41,140 --> 00:03:44,400
+So, in this case, we can use paired geometry transfer.
+
+41
+00:03:45,000 --> 00:03:47,680
+Otherwise, we should use a global transfer.
+
+42
+00:03:47,840 --> 00:03:50,640
+Basically, it's a global transfer by proximity.
+
+43
+00:03:51,120 --> 00:03:53,060
+So, let's go ahead and use paired geometry.
+
+44
+00:03:54,560 --> 00:03:58,280
+So, you can see whatever is in white, they're being transferred right now.
+
+45
+00:03:59,380 --> 00:04:01,200
+Same thing for insertions.
+
+46
+00:04:09,050 --> 00:04:13,210
+You should be able to see the bicep here.
+
+47
+00:04:15,830 --> 00:04:16,430
+There.
+
+48
+00:04:16,710 --> 00:04:18,130
+That's the transfer result.
+
+49
+00:04:19,910 --> 00:04:20,830
+And that's good.
+
+50
+00:04:21,030 --> 00:04:25,210
+Let's go ahead and start extracting origin and insertion vertices.
+
+51
+00:04:29,230 --> 00:04:31,010
+Let's call vertex scalar.
+
+52
+00:04:32,590 --> 00:04:33,490
+To vertex indices.
+
+53
+00:04:34,950 --> 00:04:36,070
+And for attribute.
+
+54
+00:04:38,850 --> 00:04:40,450
+Let's connect the attribute key.
+
+55
+00:04:41,110 --> 00:04:45,850
+And we can copy and paste the same node because we're going to need that for insertion as well.
+
+56
+00:04:50,960 --> 00:04:52,580
+Let's make sure that's connected.
+
+57
+00:04:52,580 --> 00:05:00,920
+And over here for the selection threshold, you can check the attribute value in the collection spreadsheet here.
+
+58
+00:05:01,200 --> 00:05:07,160
+If we go to vertices, because we painted on the vertices, you can see that the origin insertion values.
+
+59
+00:05:07,160 --> 00:05:13,620
+So, most of them are zero except the ones we painted should be value 1.
+
+60
+00:05:16,160 --> 00:05:17,220
+Let's see a few.
+
+61
+00:05:20,450 --> 00:05:30,370
+And that means if we set the threshold to be 0.5, we should be able to get the vertex indices above 0.5.
+
+62
+00:05:31,250 --> 00:05:35,970
+So, now we should have the origin insertion vertices.
+
+63
+00:05:38,270 --> 00:05:43,130
+And at this point, we call compute fiber field node.
+
+64
+00:05:54,210 --> 00:05:57,710
+All right, and then connect the origin insertion vertices.
+
+65
+00:06:00,270 --> 00:06:04,270
+And over here for max iteration, let's use 500.
+
+66
+00:06:08,450 --> 00:06:14,630
+All right, now we solve for a fiber field on the lower pack and also the bicep here.
+
+67
+00:06:15,230 --> 00:06:22,370
+If you're seeing the colors are not continuous or we have a way to visualize the fiber field here,
+
+68
+00:06:22,570 --> 00:06:23,490
+let's go ahead and do that.
+
+69
+00:06:25,330 --> 00:06:26,830
+So, there's our fiber field.
+
+70
+00:06:29,250 --> 00:06:32,830
+Let's turn off the visualization for the spring cut drains for now.
+
+71
+00:06:36,620 --> 00:06:37,960
+So, there's our fiber field.
+
+72
+00:06:38,200 --> 00:06:43,160
+So, if you think this is not smooth, make sure to increase the max iteration here.
+
+73
+00:06:43,440 --> 00:06:44,720
+Make sure you're using enough iteration.
+
+74
+00:06:45,400 --> 00:06:49,540
+So, we just solved for muscle fiber field here.
+
+75
+00:06:49,940 --> 00:06:53,540
+And then next, let's compute some muscle activation data.
+
+76
+00:06:56,730 --> 00:07:02,290
+Call compute muscle activation data and then make sure we connect the origin insertion indices.
+
+77
+00:07:04,750 --> 00:07:08,210
+This will prepare us for muscle contraction.
+
+78
+00:07:10,570 --> 00:07:12,290
+And once that's done,
+
+79
+00:07:14,510 --> 00:07:17,910
+we can set up muscle parameters.
+
+80
+00:07:18,430 --> 00:07:20,810
+Let's call this set muscle activation parameter.
+
+81
+00:07:21,430 --> 00:07:23,590
+We'll just use the default one for now.
+
+82
+00:07:24,970 --> 00:07:27,270
+And let's grab the terminal.
+
+83
+00:07:32,410 --> 00:07:36,290
+And that's everything we wanted to set up for this video.
+
+84
+00:07:36,290 --> 00:07:45,590
+So, at this point, if we turn on muscle activation in the simulation, let's find that.
+
+85
+00:07:46,890 --> 00:07:50,590
+If you're here, do light-intubated muscle activation.
+
+86
+00:07:50,970 --> 00:07:55,690
+If we have that checked, then start to simulate again.
+
+87
+00:07:57,830 --> 00:08:00,610
+We should be able to see muscle contraction results.
+
+88
+00:08:05,090 --> 00:08:07,010
+All right, now we just finished our simulation.
+
+89
+00:08:07,370 --> 00:08:09,310
+Let's take a look at the simulation results here.
+
+90
+00:08:10,510 --> 00:08:12,890
+You can see now the biceps starts to contract.
+
+91
+00:08:14,990 --> 00:08:15,870
+That's pretty cool.
+
+92
+00:08:16,950 --> 00:08:21,750
+So, in the next video, we'll show you a few things that you can tweak when testing your muscle stimulation.
+
+93
+00:08:21,750 --> 00:08:21,950
+have some harmonization.
+
+94
+00:08:23,790 --> 00:08:24,130
+That's just a little piece of control.
+

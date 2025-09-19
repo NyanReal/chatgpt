@@ -1,0 +1,300 @@
+1
+00:00:01,210 --> 00:00:09,210
+In the last video, we started to contract muscles. As you can see, we ran a simulation here with muscle activation.
+
+2
+00:00:10,030 --> 00:00:18,730
+Now let's run some quick tests on just these muscles. So we can do that through a node called delete slash vertices.
+
+3
+00:00:19,210 --> 00:00:26,350
+This will allow us to delete unnecessary vertices and run faster simulation tests.
+
+4
+00:00:27,330 --> 00:00:34,030
+So let's go ahead and at this point create a perfect selection that we want to delete.
+
+5
+00:00:34,390 --> 00:00:40,190
+We can do that through painting. Let's go ahead and add a paint weight map node.
+
+6
+00:00:42,410 --> 00:00:48,470
+And I can paint on the muscles I want to keep. In this case, let's go ahead and flip fill.
+
+7
+00:00:56,020 --> 00:01:01,420
+Let's also keep the muscle that's providing constraints.
+
+8
+00:01:10,940 --> 00:01:21,680
+Okay, that's a good amount. And let's give this a name for the attribute called the simulation test.
+
+9
+00:01:26,010 --> 00:01:33,590
+And we can extract the vertex selection here through the node called collection select by attribute.
+
+10
+00:01:35,970 --> 00:01:54,520
+Let's connect attribute key. And over here for operation, because we're selecting vertices based on the attribute, the operation would be a threshold.
+
+11
+00:01:54,820 --> 00:02:05,080
+So let's make sure we select everything above 0.5. So that means whatever we selected before should have attribute 1. Therefore they're selected.
+
+12
+00:02:05,080 --> 00:02:05,220
+selected.
+
+13
+00:02:08,260 --> 00:02:11,540
+Then we can connect the vertex selection here.
+
+14
+00:02:11,860 --> 00:02:17,720
+Remember, we're trying to delete the ones that are not selected.
+
+15
+00:02:18,000 --> 00:02:21,380
+So make sure we add invert operation.
+
+16
+00:02:23,620 --> 00:02:26,340
+If we do that, we can connect vertex selection here.
+
+17
+00:02:26,660 --> 00:02:31,340
+Now you can see we only keep these selected muscles.
+
+18
+00:02:32,200 --> 00:02:36,020
+So this allows us to run some quick simulation tests.
+
+19
+00:02:37,220 --> 00:02:39,460
+Let's go ahead and connect the terminal.
+
+20
+00:02:43,870 --> 00:02:46,570
+Now you can see only these muscles are here.
+
+21
+00:02:47,750 --> 00:02:49,610
+We run a simulation now.
+
+22
+00:02:50,190 --> 00:02:52,150
+You can see now it's much faster.
+
+23
+00:02:52,450 --> 00:02:55,990
+I think it was 1.6 seconds per frame.
+
+24
+00:02:55,990 --> 00:02:59,990
+So we save about 75% of the time.
+
+25
+00:03:08,010 --> 00:03:10,370
+Here, let's just let it finish.
+
+26
+00:03:22,340 --> 00:03:26,440
+Here you can see the effect of the muscle contraction.
+
+27
+00:03:27,580 --> 00:03:30,400
+So let's go ahead and play with the muscle contraction parameter.
+
+28
+00:03:31,440 --> 00:03:34,800
+We can do that in this node set muscle activation parameter.
+
+29
+00:03:35,780 --> 00:03:42,480
+Here, right now, we're using the default global parameters.
+
+30
+00:03:42,820 --> 00:03:46,080
+So we can change the global parameters here.
+
+31
+00:03:47,460 --> 00:03:48,760
+Volume contraction, volume scale.
+
+32
+00:03:48,960 --> 00:03:52,940
+This controls if muscle gains volume when it's contracting.
+
+33
+00:03:53,480 --> 00:03:55,840
+So set that to 3.
+
+34
+00:03:57,320 --> 00:04:01,480
+And if we run the simulation again, you should see the effect of that.
+
+35
+00:04:01,480 --> 00:04:07,340
+For the sake of the tutorial, let's go ahead and only keep the bicep.
+
+36
+00:04:29,330 --> 00:04:31,890
+Right, now you should only see the bicep here.
+
+37
+00:04:34,920 --> 00:04:36,880
+Let's go ahead and start running the simulation.
+
+38
+00:04:42,600 --> 00:04:44,280
+Now you can see it's running it.
+
+39
+00:04:44,660 --> 00:04:49,120
+But when the bicep is contracting, you can see it gains a lot of volume
+
+40
+00:04:49,120 --> 00:04:50,580
+because of that parameter here.
+
+41
+00:04:52,120 --> 00:04:57,360
+So there we have a quick test, quick way of testing muscle parameters.
+
+42
+00:04:59,380 --> 00:05:00,620
+Let's revert that.
+
+43
+00:05:01,480 --> 00:05:07,380
+And things we can also change is that muscle fiber length ratio.
+
+44
+00:05:08,540 --> 00:05:12,780
+So if we decrease this, the muscle will contract harder towards the center.
+
+45
+00:05:12,780 --> 00:05:19,200
+And we also have the muscle length ratio threshold.
+
+46
+00:05:19,680 --> 00:05:22,240
+So which means if your muscle...
+
+47
+00:05:22,240 --> 00:05:30,180
+So at 0.75 means if a muscle is contracted or it's shortened to 75% up to breast length,
+
+48
+00:05:30,340 --> 00:05:32,540
+then we consider that as maximal contraction.
+
+49
+00:05:32,540 --> 00:05:42,200
+So these are the things you can tweak when you're designing your simulation looks.
+
+50
+00:05:43,100 --> 00:05:46,240
+And lastly, we also have inflation volume scale.
+
+51
+00:05:46,460 --> 00:05:47,920
+This controls the breast volume.
+
+52
+00:05:47,920 --> 00:05:50,520
+So for the sake of the tutorial, let's just make that 3.
+
+53
+00:05:51,440 --> 00:05:53,740
+Then you should see the effect immediately.
+
+54
+00:05:54,180 --> 00:05:58,040
+You see the muscle is already gaining volume at breast state.
+
+55
+00:06:01,380 --> 00:06:02,080
+That's good.
+
+56
+00:06:02,600 --> 00:06:06,320
+We can also control individual muscle behaviors.
+
+57
+00:06:06,320 --> 00:06:11,060
+So what we showed here was a global tweak to all of the muscles.
+
+58
+00:06:11,360 --> 00:06:14,700
+So what if we only want to change behaviors on the bicep?
+
+59
+00:06:14,840 --> 00:06:17,140
+So we can do that through the custom parameters here.
+
+60
+00:06:18,620 --> 00:06:24,180
+Here we can change muscle parameters for only the bicep by clicking this to import all muscle names.
+
+61
+00:06:24,440 --> 00:06:26,200
+So this will load all the muscles.
+
+62
+00:06:26,200 --> 00:06:28,820
+So both bicep and pectoralis.
+
+63
+00:06:29,520 --> 00:06:32,040
+Let's identify the bicep by clicking it.
+
+64
+00:06:32,040 --> 00:06:36,860
+And then we should review the name of it called 58 at 57.
+
+65
+00:06:37,880 --> 00:06:40,920
+If you look through here, that would be this one right here.
+
+66
+00:06:41,520 --> 00:06:44,740
+So we can delete the first one.
+
+67
+00:06:46,320 --> 00:06:47,160
+That's deleted.
+
+68
+00:06:47,780 --> 00:06:50,180
+And now it's only the bicep that's left.
+
+69
+00:06:50,600 --> 00:06:57,080
+So over here we can change some muscle parameters for just that.
+
+70
+00:06:57,240 --> 00:07:00,240
+Let's make sure we change the breast volume to 3.
+
+71
+00:07:00,240 --> 00:07:05,440
+If we do that, let's make sure we apply custom parameters.
+
+72
+00:07:05,860 --> 00:07:09,520
+Because now we're overriding the global parameters.
+
+73
+00:07:11,540 --> 00:07:16,400
+And if we click record, now you should see that's changed.
+
+74
+00:07:19,070 --> 00:07:20,330
+So that's good.
+
+75
+00:07:20,970 --> 00:07:26,130
+This gives us a way to individually modify muscle behavior.
+

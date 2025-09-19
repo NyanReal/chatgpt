@@ -1,0 +1,496 @@
+1
+00:00:02,100 --> 00:00:05,600
+In the last video, we created a tetrahedral mesh for the mussels.
+
+2
+00:00:06,600 --> 00:00:11,640
+Let's go ahead and save this and create a new flesh asset.
+
+3
+00:00:16,200 --> 00:00:22,520
+Here, I'm going to call this Mussel Setup Flesh Acid.
+
+4
+00:00:23,240 --> 00:00:25,640
+And same thing, create a new data flow graph.
+
+5
+00:00:28,830 --> 00:00:32,090
+So in here, this is a brand new data flow graph.
+
+6
+00:00:32,350 --> 00:00:35,750
+The first thing we're going to do is make sure that we can import
+
+7
+00:00:36,250 --> 00:00:38,270
+the tetrahedral mesh we just created.
+
+8
+00:00:38,630 --> 00:00:41,650
+So let's go ahead and create a Get Flesh Asset node.
+
+9
+00:00:42,530 --> 00:00:45,370
+And over here, let's find our tetrahedral mesh.
+
+10
+00:00:46,510 --> 00:00:49,610
+There we go. That's our tetrahedral mesh for the mussels.
+
+11
+00:00:50,810 --> 00:00:55,390
+After that, let's first assign mass and stiffness properties.
+
+12
+00:00:57,390 --> 00:01:01,990
+The node we're calling is Set Flesh Default Properties.
+
+13
+00:01:03,650 --> 00:01:05,670
+And let's use the default one for now.
+
+14
+00:01:07,010 --> 00:01:10,550
+Once we do that, you should see, if you go to Vertices,
+
+15
+00:01:12,430 --> 00:01:14,390
+over here in the collection spreadsheet,
+
+16
+00:01:14,710 --> 00:01:16,410
+we should be able to see mass,
+
+17
+00:01:19,360 --> 00:01:21,800
+and also stiffness properties and so on.
+
+18
+00:01:24,300 --> 00:01:28,260
+And for this one, let's go ahead and save this into a Flesh Asset terminal.
+
+19
+00:01:32,070 --> 00:01:34,150
+Make sure we save the Flesh Asset.
+
+20
+00:01:35,030 --> 00:01:40,430
+Now, if we press F, we should be able to see the mussel tetrahedral mesh here.
+
+21
+00:01:41,330 --> 00:01:42,310
+Then click Start.
+
+22
+00:01:42,630 --> 00:01:44,410
+This is a quick way to simulate things.
+
+23
+00:01:44,530 --> 00:01:46,550
+You can see it just drops to the ground.
+
+24
+00:01:53,430 --> 00:01:54,090
+All right.
+
+25
+00:01:54,410 --> 00:01:58,850
+Next, let's go ahead and set some constraints on the mussels,
+
+26
+00:01:58,850 --> 00:02:01,990
+so that we can drive muscle geometry with bones.
+
+27
+00:02:03,130 --> 00:02:07,050
+Now, to do that, let's go ahead and start setting up a kinematic constraint.
+
+28
+00:02:13,440 --> 00:02:17,680
+The node we'll be calling is Set Flesh Bone Position Target Binding.
+
+29
+00:02:18,360 --> 00:02:22,660
+And then over here for the mode, let's go ahead and use kinematic mode,
+
+30
+00:02:22,920 --> 00:02:27,320
+because we're going to create some kinematic constraints between mussels and bones.
+
+31
+00:02:28,320 --> 00:02:33,140
+And over here, the skeletal mesh, make sure we assign the skeleton,
+
+32
+00:02:33,440 --> 00:02:37,400
+because we're binding the mussels to the animated skeleton.
+
+33
+00:02:38,600 --> 00:02:46,100
+And Search Radius, this is the radius threshold that we'll be using
+
+34
+00:02:46,100 --> 00:02:48,120
+to find kinematic constraints.
+
+35
+00:02:48,320 --> 00:02:54,760
+Basically, all the vertices of the mussels within this radius to the bones
+
+36
+00:02:54,760 --> 00:02:56,620
+will be bound kinematically.
+
+37
+00:02:57,220 --> 00:03:02,080
+Let's go ahead and give 1 as an initial radius.
+
+38
+00:03:03,840 --> 00:03:09,140
+And once we do that, we can visualize the kinematic constraints
+
+39
+00:03:09,140 --> 00:03:13,060
+we just created by calling Visualize Kinematic Faces.
+
+40
+00:03:17,090 --> 00:03:23,190
+So here you can see, this is all the kinematic constraints on the mussels.
+
+41
+00:03:24,950 --> 00:03:32,830
+We can go ahead and start tweaking the radius if you think that's too much constraint.
+
+42
+00:03:36,010 --> 00:03:38,610
+Yeah, this looks like a good amount to me.
+
+43
+00:03:39,330 --> 00:03:41,370
+And that's our kinematic constraints.
+
+44
+00:03:41,370 --> 00:03:46,150
+We're also going to need some sprain constraints between the mussels
+
+45
+00:03:46,150 --> 00:03:48,710
+to hold the mussels together like a fascia does.
+
+46
+00:03:50,050 --> 00:03:53,990
+So, let's go ahead and call another node,
+
+47
+00:03:54,310 --> 00:03:57,070
+Set Protects Triangle Position Target Binding.
+
+48
+00:03:58,110 --> 00:04:01,190
+And over here, you can see there's the position target stiffness,
+
+49
+00:04:01,530 --> 00:04:02,650
+also the search radius.
+
+50
+00:04:03,510 --> 00:04:08,910
+And let's check, allow sliding to allow the sprain to slide between muscles.
+
+51
+00:04:08,910 --> 00:04:12,370
+And for the stiffness, let's set it up to 10.
+
+52
+00:04:13,330 --> 00:04:15,810
+Search radius of 0.5.
+
+53
+00:04:18,720 --> 00:04:22,260
+And before we do anything,
+
+54
+00:04:22,660 --> 00:04:26,480
+let's slightly tweak the density here.
+
+55
+00:04:27,340 --> 00:04:30,380
+The parameter I found to be optimal is
+
+56
+00:04:30,380 --> 00:04:35,900
+1000 for density and 100,000 for stiffness.
+
+57
+00:04:40,730 --> 00:04:47,010
+And density actually matters when you set spring stiffness,
+
+58
+00:04:47,290 --> 00:04:52,770
+because the spring stiffness is scaled with density or with mass.
+
+59
+00:04:53,490 --> 00:04:59,010
+Once we do that, let's go ahead and connect back to the terminal.
+
+60
+00:04:59,750 --> 00:05:03,890
+And also visualize the spring constraints we just created
+
+61
+00:05:03,890 --> 00:05:06,750
+by calling visualize position targets.
+
+62
+00:05:08,010 --> 00:05:10,650
+If you click this top right corner,
+
+63
+00:05:11,350 --> 00:05:15,730
+you can see these are the springs are visualized in red.
+
+64
+00:05:17,310 --> 00:05:19,930
+So it looks like a good amount to me again.
+
+65
+00:05:20,870 --> 00:05:22,930
+Let's start simulating things.
+
+66
+00:05:22,930 --> 00:05:27,370
+So now we have kinematic constraints between muscles bones
+
+67
+00:05:27,370 --> 00:05:30,410
+and also with spring constraints between muscles.
+
+68
+00:05:31,430 --> 00:05:35,470
+So let's go ahead and bring the skeleton in.
+
+69
+00:05:37,130 --> 00:05:38,930
+Set the skeleton here.
+
+70
+00:05:39,890 --> 00:05:41,070
+You can see that.
+
+71
+00:05:42,030 --> 00:05:44,050
+Also going to need some animation.
+
+72
+00:05:44,050 --> 00:05:47,410
+So let's go ahead and use the bicep curl.
+
+73
+00:05:48,090 --> 00:05:49,250
+It's our animation.
+
+74
+00:05:50,630 --> 00:05:53,050
+Now let's tweak the solver setting a little bit.
+
+75
+00:05:54,430 --> 00:05:56,650
+For the purpose of the tutorial,
+
+76
+00:05:57,030 --> 00:05:59,190
+we'll be running a quadistatic simulation,
+
+77
+00:05:59,630 --> 00:06:03,450
+meaning that there will be no inertia.
+
+78
+00:06:03,910 --> 00:06:06,730
+So no dynamics in the simulation.
+
+79
+00:06:08,670 --> 00:06:10,690
+The reason we're doing that is that
+
+80
+00:06:10,690 --> 00:06:12,970
+MO deformer is deterministic.
+
+81
+00:06:13,590 --> 00:06:16,370
+So for each pose, we want a deterministic result.
+
+82
+00:06:16,710 --> 00:06:19,030
+We don't want any inertia or dynamics.
+
+83
+00:06:19,390 --> 00:06:22,150
+So let's make sure we turn on this do quadistatics.
+
+84
+00:06:23,290 --> 00:06:28,150
+And also make sure we have the Gauss-Sadel solver enabled.
+
+85
+00:06:28,330 --> 00:06:30,910
+We have to design the Gauss-Sadel solver
+
+86
+00:06:30,910 --> 00:06:33,530
+specifically for quadistatic simulation.
+
+87
+00:06:33,990 --> 00:06:35,010
+So make sure that's checked.
+
+88
+00:06:41,100 --> 00:06:43,060
+And that looks good to me.
+
+89
+00:06:43,880 --> 00:06:46,620
+Remember, we can always tweak the solver settings,
+
+90
+00:06:46,960 --> 00:06:48,520
+such as number of steps,
+
+91
+00:06:49,520 --> 00:06:50,880
+and also a number of iterations
+
+92
+00:06:51,860 --> 00:06:54,160
+to reduce the numerical inertia.
+
+93
+00:06:54,440 --> 00:06:56,160
+But for now, let's see what this looks.
+
+94
+00:06:57,620 --> 00:06:58,120
+Right?
+
+95
+00:06:58,820 --> 00:07:01,200
+You can see it's very unstable right now.
+
+96
+00:07:01,500 --> 00:07:04,660
+That's because we have gravity turned on.
+
+97
+00:07:04,820 --> 00:07:09,440
+Remember, we need to run a quadistatic simulation.
+
+98
+00:07:10,820 --> 00:07:13,260
+So let's make sure we have gravity off.
+
+99
+00:07:16,350 --> 00:07:18,030
+You can see there's a lot of inertia.
+
+100
+00:07:18,750 --> 00:07:21,530
+And in this case, what you want to do is
+
+101
+00:07:22,070 --> 00:07:24,830
+tweak number of sub-steps and number of iterations.
+
+102
+00:07:25,650 --> 00:07:30,210
+So let's go ahead and use 5 sub-steps and 20 iterations.
+
+103
+00:07:35,790 --> 00:07:39,790
+And in this case, now the simulation is very likely to be offline.
+
+104
+00:07:39,990 --> 00:07:44,470
+So what we want to do is make sure we cache the simulation.
+
+105
+00:07:46,090 --> 00:07:49,910
+Let's go ahead and over here create a cache collection.
+
+106
+00:07:59,270 --> 00:08:01,330
+Let's create a new folder called cache.
+
+107
+00:08:05,480 --> 00:08:09,320
+And let's call this Muscle Chaos Cache Collection.
+
+108
+00:08:10,300 --> 00:08:13,620
+Once you load the cache, you should be able to see the scroll bar here.
+
+109
+00:08:14,260 --> 00:08:14,840
+You can scroll this.
+
+110
+00:08:15,140 --> 00:08:19,700
+It only shows the animation right now because we haven't simulated it yet.
+
+111
+00:08:20,380 --> 00:08:23,060
+So let's go ahead and start simulating it.
+
+112
+00:08:24,280 --> 00:08:27,260
+Probably about 90 frames or so.
+
+113
+00:08:29,140 --> 00:08:34,020
+And we can change the length of the simulation here.
+
+114
+00:08:36,020 --> 00:08:38,800
+Change the time range from 0 to 3.
+
+115
+00:08:38,800 --> 00:08:46,460
+So at 30 frames per second, 3 will give you 90 frames.
+
+116
+00:08:46,840 --> 00:08:49,600
+So let's go ahead and click this red record button.
+
+117
+00:08:50,380 --> 00:08:53,640
+And you should see start to simulate.
+
+118
+00:09:01,680 --> 00:09:04,020
+Now we just finished our simulation.
+
+119
+00:09:04,300 --> 00:09:06,400
+You can see we ran 90 frames.
+
+120
+00:09:06,780 --> 00:09:10,160
+If you scroll through the timeline here,
+
+121
+00:09:10,920 --> 00:09:14,740
+you should see the muscles being simulated.
+
+122
+00:09:18,390 --> 00:09:19,710
+So in the next video,
+
+123
+00:09:19,750 --> 00:09:21,810
+we'll start setting up some muscle properties
+
+124
+00:09:21,810 --> 00:09:26,390
+and start contracting muscles just to add on top of this.
+

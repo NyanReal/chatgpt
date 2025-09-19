@@ -1,0 +1,240 @@
+1
+00:00:01,210 --> 00:00:08,370
+In the last video, we imported all the assets for email and then enabled all the necessary plugins.
+
+2
+00:00:08,930 --> 00:00:11,490
+Let's go ahead and start setting up our muscle simulation.
+
+3
+00:00:12,630 --> 00:00:15,690
+First, let me create a folder called FleshAssets.
+
+4
+00:00:17,670 --> 00:00:21,830
+And in here, let's create our first FleshAsset.
+
+5
+00:00:24,270 --> 00:00:29,830
+In this one, I'm going to generate a tetraketral mesh for the muscles.
+
+6
+00:00:29,830 --> 00:00:34,250
+So let's call this Fitmesh Muscle FleshAsset.
+
+7
+00:00:35,070 --> 00:00:38,190
+Double click that and then say create new data flow.
+
+8
+00:00:39,350 --> 00:00:40,430
+Click save.
+
+9
+00:00:41,530 --> 00:00:45,410
+Now we created a blank data flow graph.
+
+10
+00:00:46,710 --> 00:00:51,370
+Inside the data flow graph, this is where we'll be setting up our muscle simulation.
+
+11
+00:00:52,750 --> 00:00:54,490
+Let's go ahead and save this.
+
+12
+00:00:54,490 --> 00:00:57,210
+And then the first thing we're going to do is...
+
+13
+00:00:57,210 --> 00:01:03,890
+Let's right click and then type skeletal mesh to bring in our skeletal mesh of the skeleton.
+
+14
+00:01:05,730 --> 00:01:09,370
+So let's type skeleton here and then find our skeleton.
+
+15
+00:01:10,830 --> 00:01:17,030
+From here, let's convert it to a collection by calling skeletal mesh to collection.
+
+16
+00:01:18,450 --> 00:01:22,030
+Once we do that, now you should see the geometries.
+
+17
+00:01:22,990 --> 00:01:26,390
+And then also the attributes here in the collection spreadsheet.
+
+18
+00:01:27,690 --> 00:01:33,350
+To drive the simulation, we're only going to need the transform from this skeleton.
+
+19
+00:01:33,950 --> 00:01:40,290
+Because like I said before, we're going to need the animated skeleton to drive the muscles and then the fat.
+
+20
+00:01:40,290 --> 00:01:43,330
+And eventually transfer deformation onto the skin.
+
+21
+00:01:43,990 --> 00:01:46,930
+So skeleton transform is all we're going to need.
+
+22
+00:01:47,150 --> 00:01:50,270
+Let's make sure we click this transforms only button.
+
+23
+00:01:51,890 --> 00:01:57,390
+Now we should not see the geometry anymore because now it's only the skeleton transform.
+
+24
+00:01:59,870 --> 00:02:05,470
+Because we're creating a tetrahedral mesh on the muscles, let's bring in the muscle geometry.
+
+25
+00:02:06,890 --> 00:02:10,850
+Again, the skeletal mesh, but this time it's going to be the muscles.
+
+26
+00:02:13,720 --> 00:02:14,660
+Here we go.
+
+27
+00:02:17,670 --> 00:02:20,710
+Now, same thing, let's convert it to a skeleton.
+
+28
+00:02:22,690 --> 00:02:24,670
+Sorry, a skeletal mesh collection.
+
+29
+00:02:25,770 --> 00:02:28,390
+Now you should see the muscles.
+
+30
+00:02:31,130 --> 00:02:37,490
+From this point, create a node called create tetrahedron.
+
+31
+00:02:39,730 --> 00:02:43,510
+And let's modify the parameter a little bit before we plug everything in.
+
+32
+00:02:44,250 --> 00:02:49,710
+For this one, let's use tetwild to generate a high-resolution tetrahedral mesh.
+
+33
+00:02:51,190 --> 00:02:53,970
+And let's make sure we have this coarsen button on.
+
+34
+00:02:54,250 --> 00:02:58,990
+Because as an initial test, we want to reduce the resolution of the tetrahedron mesh.
+
+35
+00:02:59,950 --> 00:03:05,470
+We can always change this later and go back here and modify the settings.
+
+36
+00:03:05,470 --> 00:03:08,630
+But at this point, let's plug in the collection here.
+
+37
+00:03:08,830 --> 00:03:12,470
+Let's give it the transforms, also the source geometry.
+
+38
+00:03:13,290 --> 00:03:15,590
+We're going to use the muscles as the source geometry.
+
+39
+00:03:17,350 --> 00:03:22,950
+So once that's connected, it should take a little bit of time to generate the tetrahedral mesh.
+
+40
+00:03:23,790 --> 00:03:26,790
+Again, it should have the transforms here.
+
+41
+00:03:27,390 --> 00:03:32,570
+And then generate a volumetric mesh from this surface mesh here.
+
+42
+00:03:32,830 --> 00:03:35,730
+Remember, the muscles are only a surface mesh.
+
+43
+00:03:36,870 --> 00:03:38,030
+Now that's done.
+
+44
+00:03:38,810 --> 00:03:42,070
+You should be able to see the tetrahedral mesh.
+
+45
+00:03:42,270 --> 00:03:44,170
+This is actually a volumetric mesh.
+
+46
+00:03:49,950 --> 00:03:50,590
+Great.
+
+47
+00:03:50,830 --> 00:03:57,270
+We can also transfer the colors from the skeletal mesh to the tetrahedral mesh.
+
+48
+00:03:58,790 --> 00:04:03,750
+Let's go ahead and do that by calling transfer vertex attribute.
+
+49
+00:04:06,530 --> 00:04:09,910
+From here, the attribute we want to transfer would be color.
+
+50
+00:04:12,680 --> 00:04:17,300
+And from collection, let's do the skeletal mesh collection.
+
+51
+00:04:19,700 --> 00:04:27,480
+You see, once that's connected, we have all the colors transferred to the tetrahedral mesh.
+
+52
+00:04:29,120 --> 00:04:32,620
+Let's go ahead and save this into a terminal.
+
+53
+00:04:33,920 --> 00:04:35,280
+Flash asset terminal.
+
+54
+00:04:39,170 --> 00:04:40,950
+Now, we save this.
+
+55
+00:04:41,150 --> 00:04:47,610
+Now, everything inside the collection is saved into our flash asset that we can use.
+
+56
+00:04:49,670 --> 00:04:58,430
+We press F here, and now you should be able to see the saved geometry.
+
+57
+00:05:01,610 --> 00:05:07,050
+Alright, so in the next video, we'll start using this tetrahedral mesh and start simulating things.
+
+58
+00:05:07,050 --> 00:05:07,330
+That's true.
+
+59
+00:05:08,670 --> 00:05:08,850
+And then we tap into the spark.
+
+60
+00:05:08,870 --> 00:05:09,650
+First we'll come from the Archdiocesanh
+
