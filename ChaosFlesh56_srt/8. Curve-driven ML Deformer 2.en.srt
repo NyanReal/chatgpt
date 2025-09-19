@@ -1,0 +1,512 @@
+1
+00:00:01,600 --> 00:00:12,170
+And now we want to create a new multi-former. Let's go ahead and do that.
+
+2
+00:00:19,510 --> 00:00:27,300
+This time let's call this animation curve and multi-former. Awesome.
+
+3
+00:00:28,960 --> 00:00:33,240
+Save this and open this one. Assign sculptal mesh to be the skin.
+
+4
+00:00:36,230 --> 00:00:43,250
+And then animation sequence. Be the training data one and also the geometry cache.
+
+5
+00:00:46,340 --> 00:00:53,060
+Great. Now here it says needs inputs. Now remember this time we need to give the curves as inputs.
+
+6
+00:00:53,320 --> 00:00:58,680
+So if you add all of the curves, they both should show up over here.
+
+7
+00:01:01,500 --> 00:01:15,660
+It's 100 iterations. Over here, if you use the local mode, I think that's not working for the current 5.6 release.
+
+8
+00:01:15,940 --> 00:01:18,300
+This is something we just fixed.
+
+9
+00:01:18,960 --> 00:01:24,160
+For 5.7 exactly, you should see the error message.
+
+10
+00:01:24,500 --> 00:01:26,720
+So make sure you change that from local to global.
+
+11
+00:01:28,060 --> 00:01:30,300
+And then train model again.
+
+12
+00:01:32,200 --> 00:01:38,980
+You see the loss is going down. You can use more iterations if you want to, but for demonstration purpose.
+
+13
+00:01:42,430 --> 00:01:48,010
+Now you should also see an error message saying train neural network is incompatible with selected sculptal mesh.
+
+14
+00:01:48,510 --> 00:01:54,890
+If you open up the output log, it will show you that the bicep curve or the lower pec curve is missing.
+
+15
+00:01:56,310 --> 00:01:59,870
+So let's go ahead and go to the sculptal mesh.
+
+16
+00:02:01,250 --> 00:02:03,070
+Then find the skeleton.
+
+17
+00:02:06,430 --> 00:02:07,670
+That is right here.
+
+18
+00:02:09,930 --> 00:02:13,250
+And let's copy these curves.
+
+19
+00:02:14,690 --> 00:02:16,590
+Then we can paste it here.
+
+20
+00:02:20,150 --> 00:02:20,830
+Let's go.
+
+21
+00:02:21,450 --> 00:02:22,290
+We save this.
+
+22
+00:02:22,750 --> 00:02:25,350
+Go back to the former.
+
+23
+00:02:26,670 --> 00:02:27,850
+Close this one.
+
+24
+00:02:27,850 --> 00:02:27,930
+Train.
+
+25
+00:02:28,410 --> 00:02:29,750
+And then train again.
+
+26
+00:02:36,390 --> 00:02:38,530
+Now you should see that error message should be gone.
+
+27
+00:02:38,530 --> 00:02:47,670
+That's because that multi-former right now only supports curves on the skeleton asset instead of the skeletal mesh asset.
+
+28
+00:02:48,010 --> 00:02:51,030
+I believe they're fixing this in the very next release.
+
+29
+00:02:52,790 --> 00:02:55,370
+So now we can start validating our training.
+
+30
+00:02:55,990 --> 00:02:57,450
+Let's go into testing.
+
+31
+00:02:58,170 --> 00:03:02,570
+Then again, set the test animation to be exactly the same as training animation.
+
+32
+00:03:03,390 --> 00:03:05,310
+Just to see if the network fits.
+
+33
+00:03:06,870 --> 00:03:09,150
+And we can turn on show heat map.
+
+34
+00:03:11,750 --> 00:03:13,950
+Now you can see where the delta is being applied.
+
+35
+00:03:14,470 --> 00:03:18,190
+So again, from 0 to 20, it's a bicep contraction.
+
+36
+00:03:18,810 --> 00:03:22,510
+And then 20 to 40, it's a lower pec contraction.
+
+37
+00:03:23,370 --> 00:03:25,590
+Which means our network is fitting pretty good.
+
+38
+00:03:27,410 --> 00:03:31,870
+Now let's use this curve driven a multi-former in blueprint example.
+
+39
+00:03:32,150 --> 00:03:33,570
+Let's go back to the main level.
+
+40
+00:03:33,570 --> 00:03:35,790
+And let's create a new level.
+
+41
+00:03:40,990 --> 00:03:41,710
+Okay.
+
+42
+00:03:42,290 --> 00:03:46,350
+And then let's drag out our sculptor mesh, which is the skin.
+
+43
+00:03:49,670 --> 00:03:50,730
+That's right here.
+
+44
+00:03:56,280 --> 00:03:59,660
+Now let's make a blueprint out of this.
+
+45
+00:04:00,960 --> 00:04:04,960
+So we can do this by convert selection to a blueprint class.
+
+46
+00:04:07,960 --> 00:04:09,000
+That's good.
+
+47
+00:04:13,010 --> 00:04:14,470
+Now there's our blueprint.
+
+48
+00:04:15,250 --> 00:04:18,330
+And over here, we can add a multi-former component.
+
+49
+00:04:21,870 --> 00:04:25,610
+And what we can do is we can assign our multi-former asset.
+
+50
+00:04:25,870 --> 00:04:28,250
+This is assigned to be the one that we just created.
+
+51
+00:04:30,610 --> 00:04:31,130
+Okay.
+
+52
+00:04:31,970 --> 00:04:34,990
+And over here, the sculptor mesh component.
+
+53
+00:04:35,230 --> 00:04:40,850
+Let's use animation asset because eventually we're going to drive this using animation.
+
+54
+00:04:42,430 --> 00:04:44,450
+So let's compile this for now.
+
+55
+00:04:45,210 --> 00:04:53,870
+But over here, the eventual animation that we'll use will be a copy of the bicep curl animation.
+
+56
+00:04:53,870 --> 00:04:55,250
+So let's duplicate that.
+
+57
+00:04:59,990 --> 00:05:04,670
+We're going to call this slip weights, but with activation.
+
+58
+00:05:08,180 --> 00:05:09,660
+Okay, let's save this.
+
+59
+00:05:11,140 --> 00:05:18,920
+And if we go back to the blueprint, we can assign this animation data.
+
+60
+00:05:18,920 --> 00:05:20,820
+You can see now it starts to play.
+
+61
+00:05:21,440 --> 00:05:22,980
+Make sure we compile this.
+
+62
+00:05:23,800 --> 00:05:24,320
+Save this.
+
+63
+00:05:26,620 --> 00:05:33,340
+Let's start adding some curves to the animation to drive independent muscle activation.
+
+64
+00:05:34,120 --> 00:05:39,940
+Go to our animation over here, and then add curve here.
+
+65
+00:05:40,740 --> 00:05:42,200
+Let's find our bicep.
+
+66
+00:05:43,400 --> 00:05:47,020
+And also the lower pec curve.
+
+67
+00:05:49,160 --> 00:05:50,160
+There we go.
+
+68
+00:05:51,100 --> 00:05:52,140
+Add them too.
+
+69
+00:05:53,200 --> 00:05:55,300
+We can open them up in the curve editor.
+
+70
+00:05:56,960 --> 00:06:02,020
+And let's start by adding a pulse to the bicep.
+
+71
+00:06:05,330 --> 00:06:07,170
+Add some keys to it.
+
+72
+00:06:09,770 --> 00:06:10,790
+Another one.
+
+73
+00:06:18,920 --> 00:06:20,340
+So something in the middle.
+
+74
+00:06:22,900 --> 00:06:25,200
+Now let's make it from 0 to 1.
+
+75
+00:06:28,020 --> 00:06:28,540
+Approximately.
+
+76
+00:06:29,480 --> 00:06:30,000
+Okay.
+
+77
+00:06:30,280 --> 00:06:31,120
+Now we can save this.
+
+78
+00:06:31,280 --> 00:06:35,260
+If we go back to our blueprint and wait for the start of the animation.
+
+79
+00:06:38,260 --> 00:06:39,080
+There we go.
+
+80
+00:06:39,240 --> 00:06:42,940
+We should see a quick contraction of the bicep.
+
+81
+00:06:43,100 --> 00:06:46,280
+And that's from the animation curve, actually.
+
+82
+00:06:46,280 --> 00:06:46,380
+Okay.
+
+83
+00:06:46,900 --> 00:06:48,900
+So let's actually refine that a little bit.
+
+84
+00:06:50,280 --> 00:06:52,440
+Back to our animation.
+
+85
+00:06:53,440 --> 00:06:56,560
+Then start making some meaningful adjustments.
+
+86
+00:07:01,240 --> 00:07:02,120
+Okay.
+
+87
+00:07:02,120 --> 00:07:02,220
+Okay.
+
+88
+00:07:03,420 --> 00:07:07,600
+The idea is that when we have the animation over here.
+
+89
+00:07:12,750 --> 00:07:15,610
+Say when arm starts to contract.
+
+90
+00:07:16,250 --> 00:07:17,290
+Right there.
+
+91
+00:07:17,510 --> 00:07:19,670
+We want some lower pec contraction.
+
+92
+00:07:20,390 --> 00:07:20,710
+Okay.
+
+93
+00:07:21,690 --> 00:07:24,230
+So let's mark this as the starting point.
+
+94
+00:07:26,030 --> 00:07:27,390
+Add a key to it.
+
+95
+00:07:45,580 --> 00:07:49,580
+And let's mark here to be...
+
+96
+00:07:50,380 --> 00:07:52,560
+Or over here to be the end of it.
+
+97
+00:07:56,000 --> 00:07:57,520
+Then let's add a pulse.
+
+98
+00:08:03,380 --> 00:08:04,100
+Alright.
+
+99
+00:08:05,460 --> 00:08:08,520
+Let's also add some bicep contraction there.
+
+100
+00:08:09,020 --> 00:08:10,600
+So let's say we start from here.
+
+101
+00:08:12,420 --> 00:08:13,640
+The bicep.
+
+102
+00:08:15,160 --> 00:08:17,180
+Let's delete the current ones first.
+
+103
+00:08:25,280 --> 00:08:27,080
+Say we're starting from here.
+
+104
+00:08:28,480 --> 00:08:29,360
+Add key.
+
+105
+00:08:31,280 --> 00:08:33,420
+And then about here is the peak.
+
+106
+00:08:34,780 --> 00:08:36,740
+And here is the end.
+
+107
+00:08:46,020 --> 00:08:48,220
+Again, from 0 to 1 to 0.
+
+108
+00:08:49,360 --> 00:08:50,240
+So look at that.
+
+109
+00:08:50,480 --> 00:08:51,260
+Now we have...
+
+110
+00:08:52,320 --> 00:08:53,540
+Modify two curves.
+
+111
+00:08:53,720 --> 00:08:56,240
+So that they should behave differently
+
+112
+00:08:56,240 --> 00:08:58,300
+in the very first bicep curl.
+
+113
+00:08:59,080 --> 00:09:00,260
+So let's save this.
+
+114
+00:09:00,840 --> 00:09:02,580
+And go back to the blueprint.
+
+115
+00:09:02,980 --> 00:09:04,180
+Try to see the difference.
+
+116
+00:09:05,800 --> 00:09:06,380
+Boom.
+
+117
+00:09:06,380 --> 00:09:06,860
+It starts.
+
+118
+00:09:09,120 --> 00:09:10,480
+Zoom in a little bit.
+
+119
+00:09:13,100 --> 00:09:14,580
+Wait for it to restart.
+
+120
+00:09:21,200 --> 00:09:24,280
+There you can see the lower pec is contracting.
+
+121
+00:09:25,980 --> 00:09:28,420
+Let's focus on the bicep this time.
+
+122
+00:09:31,810 --> 00:09:32,790
+Start over.
+
+123
+00:09:33,630 --> 00:09:34,190
+There.
+
+124
+00:09:35,170 --> 00:09:37,690
+See now we have a bicep contraction right there.
+
+125
+00:09:39,530 --> 00:09:41,070
+And that's how I want to show you
+
+126
+00:09:41,070 --> 00:09:44,010
+how to control muscle activation independently.
+
+127
+00:09:44,750 --> 00:09:48,890
+Besides the pose-driven ML deformer.
+
+128
+00:09:52,490 --> 00:09:54,890
+And I hope you enjoy this series.
+

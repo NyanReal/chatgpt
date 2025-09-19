@@ -1,0 +1,332 @@
+1
+00:00:00,440 --> 00:00:05,720
+In the last video, we set up and ran a coupled muscle and fat simulation.
+
+2
+00:00:06,280 --> 00:00:11,000
+You can see we have some interesting bicep bulge reflected on the fat layer.
+
+3
+00:00:11,780 --> 00:00:19,340
+Now let's go ahead and start generating a geometry cache and use that to train a multiformer.
+
+4
+00:00:19,760 --> 00:00:25,120
+So first thing we're going to do is go ahead and create a generate surface binding node.
+
+5
+00:00:25,120 --> 00:00:30,680
+This will generate bindings from the skin layer to the fat layer.
+
+6
+00:00:31,600 --> 00:00:37,240
+And over here, let's set our skeletal mesh to be the skin.
+
+7
+00:00:39,320 --> 00:00:40,680
+Choose the blunt one.
+
+8
+00:00:46,480 --> 00:00:49,380
+And search radius 1.0.
+
+9
+00:00:54,360 --> 00:00:55,980
+Now it starts to evaluate.
+
+10
+00:01:06,980 --> 00:01:08,900
+Good. We just have the results.
+
+11
+00:01:08,900 --> 00:01:11,400
+And you can see the skin.
+
+12
+00:01:11,720 --> 00:01:13,660
+What you've seen is the skin here.
+
+13
+00:01:14,220 --> 00:01:17,060
+Inside the spring constraints for a second.
+
+14
+00:01:17,640 --> 00:01:18,640
+It's color coded.
+
+15
+00:01:19,220 --> 00:01:21,720
+And you can check out the meaning of the color here.
+
+16
+00:01:21,940 --> 00:01:24,880
+Basically, if you don't see red, it's good.
+
+17
+00:01:25,640 --> 00:01:33,160
+Blue and green is there either inside the tetrahedral mesh or on the surface of the tetrahedral mesh.
+
+18
+00:01:33,880 --> 00:01:34,940
+So this is good.
+
+19
+00:01:35,180 --> 00:01:36,180
+And let's save that information.
+
+20
+00:01:37,080 --> 00:01:38,060
+Plug that in.
+
+21
+00:01:38,320 --> 00:01:41,940
+And now we have the information saved in the flesh asset.
+
+22
+00:01:42,960 --> 00:01:50,000
+At this point, we can create a geometry cache so that we can save things in there.
+
+23
+00:01:51,180 --> 00:01:52,780
+Click new geometry cache.
+
+24
+00:01:56,240 --> 00:01:58,460
+And let's call this the geometry cache.
+
+25
+00:01:58,680 --> 00:01:59,380
+Looks good.
+
+26
+00:02:00,460 --> 00:02:02,000
+And embedded skeletal mesh.
+
+27
+00:02:02,120 --> 00:02:05,360
+Make sure we're giving it exactly the same thing as here.
+
+28
+00:02:05,620 --> 00:02:06,260
+The skeletal mesh.
+
+29
+00:02:06,760 --> 00:02:07,880
+It's the blend one.
+
+30
+00:02:10,800 --> 00:02:11,760
+Choose that.
+
+31
+00:02:12,020 --> 00:02:15,100
+And now we can click generate geometry cache.
+
+32
+00:02:15,780 --> 00:02:16,700
+Let's do that.
+
+33
+00:02:18,140 --> 00:02:19,120
+Now it's evaluating.
+
+34
+00:02:19,680 --> 00:02:23,940
+It's interpolating from the chaos cache or the tetrahedral mesh simulation.
+
+35
+00:02:24,580 --> 00:02:26,480
+You can see now we have the geometry cache here.
+
+36
+00:02:26,700 --> 00:02:31,080
+Let's double click that and view the geometry cache.
+
+37
+00:02:31,420 --> 00:02:33,300
+You can see this is actually the skin.
+
+38
+00:02:33,480 --> 00:02:34,520
+It's not the fat layer anymore.
+
+39
+00:02:34,580 --> 00:02:35,320
+It's the skin.
+
+40
+00:02:36,460 --> 00:02:39,820
+But it's doing the bicep curl animation.
+
+41
+00:02:41,500 --> 00:02:44,020
+This is interpolated from the simulation.
+
+42
+00:02:47,730 --> 00:02:48,590
+And that's good.
+
+43
+00:02:50,650 --> 00:02:54,790
+Let's go ahead and use this geometry cache to train ML deformer.
+
+44
+00:02:55,070 --> 00:02:59,810
+And to do that, let's go ahead and create a new ML deformer asset.
+
+45
+00:03:03,400 --> 00:03:10,160
+And let's call this one the email ML deformer.
+
+46
+00:03:11,880 --> 00:03:12,860
+Double click that.
+
+47
+00:03:13,480 --> 00:03:16,320
+And over here, you can see this is the empty ML deformer.
+
+48
+00:03:16,320 --> 00:03:20,300
+And the skeletal mesh to escape the skin.
+
+49
+00:03:23,800 --> 00:03:25,380
+Let's load the animation.
+
+50
+00:03:26,280 --> 00:03:30,140
+Remember, we use the bicep curl animation mixture.
+
+51
+00:03:30,480 --> 00:03:36,260
+You have to make sure the animation match the simulation that you ran.
+
+52
+00:03:37,340 --> 00:03:40,520
+So remember, we ran the simulation on bicep curl animation.
+
+53
+00:03:42,180 --> 00:03:43,860
+Let's give it the geometry cache.
+
+54
+00:03:50,560 --> 00:03:53,480
+And it's got 90 frames of data.
+
+55
+00:03:59,720 --> 00:04:00,280
+Right?
+
+56
+00:04:02,500 --> 00:04:05,900
+Now we can see that it says the training process needs inputs.
+
+57
+00:04:06,120 --> 00:04:08,080
+Let's go ahead and provide some network inputs.
+
+58
+00:04:08,280 --> 00:04:11,420
+Which will be the joints that controls the skeletal mesh.
+
+59
+00:04:12,220 --> 00:04:14,740
+At this point, let's add all enemy bones.
+
+60
+00:04:14,740 --> 00:04:19,540
+So this will add all 54 joints that controls the skeletal mesh.
+
+61
+00:04:19,960 --> 00:04:24,300
+And you can later on prune the list to only keep the major joints.
+
+62
+00:04:25,140 --> 00:04:30,900
+This allows you to save memory or save the number of parameters used in a network.
+
+63
+00:04:32,060 --> 00:04:37,420
+Once we have that set up, let's use the default parameter to set the number of iterations.
+
+64
+00:04:37,420 --> 00:04:38,780
+Let's do some quick training.
+
+65
+00:04:39,200 --> 00:04:42,120
+Just as a proof of concept that we can do this.
+
+66
+00:04:42,980 --> 00:04:45,800
+After that, let's click train model.
+
+67
+00:04:47,240 --> 00:04:49,620
+So you can see that loss is already decreasing.
+
+68
+00:04:49,880 --> 00:04:52,280
+You can use more iterations to decrease the loss.
+
+69
+00:04:52,680 --> 00:04:56,440
+And of course, we're using example training data.
+
+70
+00:04:56,660 --> 00:05:00,660
+This is not usually the number of frames that you want.
+
+71
+00:05:00,820 --> 00:05:02,440
+It's only 90 frames.
+
+72
+00:05:03,260 --> 00:05:07,160
+For the horse example, we use 5,000 frames.
+
+73
+00:05:07,160 --> 00:05:07,920
+We use the strength training data.
+
+74
+00:05:09,600 --> 00:05:10,800
+Just as a comparison.
+
+75
+00:05:12,080 --> 00:05:15,380
+And now, I'm going to go ahead and go to testing mode.
+
+76
+00:05:16,880 --> 00:05:24,920
+You can just validate the training result by setting the animation, test animation, to be exactly the same as the training data.
+
+77
+00:05:25,260 --> 00:05:26,420
+Just to see if it fits.
+
+78
+00:05:29,890 --> 00:05:31,910
+Alright, we can also bring in the ground truth.
+
+79
+00:05:33,950 --> 00:05:35,290
+Let's bring in the heat map.
+
+80
+00:05:36,670 --> 00:05:38,890
+Let's see where the deltas are being applied.
+
+81
+00:05:43,290 --> 00:05:46,090
+See, it's applying a lot of delta on devices.
+
+82
+00:05:48,400 --> 00:05:56,780
+Of course, like I said, you can increase the number of training iterations to prove the accuracy of the network.
+
+83
+00:05:56,780 --> 00:06:00,160
+But here, we're just proving the concept.
+

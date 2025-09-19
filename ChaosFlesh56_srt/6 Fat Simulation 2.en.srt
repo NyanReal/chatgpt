@@ -1,0 +1,328 @@
+1
+00:00:00,160 --> 00:00:04,160
+And then assign an attribute. Let's call this the inner surface.
+
+2
+00:00:06,200 --> 00:00:09,840
+And then let's transfer this to the fat layer tetrahedral mesh.
+
+3
+00:00:11,020 --> 00:00:19,670
+Grab this. Grab a transfer attribute, vertex attribute node.
+
+4
+00:00:22,890 --> 00:00:25,350
+And then connect the collection here.
+
+5
+00:00:27,770 --> 00:00:31,910
+In this case, it doesn't matter whether it's a global transfer or a parallel transfer,
+
+6
+00:00:31,910 --> 00:00:33,450
+because we only have one geometry.
+
+7
+00:00:35,170 --> 00:00:37,650
+Let's go ahead and see the transfer results.
+
+8
+00:00:37,930 --> 00:00:41,910
+You can see now the inside is white,
+
+9
+00:00:42,150 --> 00:00:44,890
+because it's got the attribute transferred to it.
+
+10
+00:00:46,110 --> 00:00:46,950
+That's good.
+
+11
+00:00:47,510 --> 00:00:52,830
+And then make sure we replace this collection with the transfer collection
+
+12
+00:00:52,830 --> 00:00:54,330
+that contains the attribute.
+
+13
+00:00:56,510 --> 00:00:57,870
+After appending it,
+
+14
+00:00:59,150 --> 00:01:00,870
+Now, if we go to vertices,
+
+15
+00:01:02,910 --> 00:01:05,050
+we should be able to see the attribute.
+
+16
+00:01:05,890 --> 00:01:07,330
+Call it inner surface here.
+
+17
+00:01:08,530 --> 00:01:09,010
+All right.
+
+18
+00:01:09,150 --> 00:01:13,310
+Next step is extracting the vertex selection from this attribute.
+
+19
+00:01:14,790 --> 00:01:16,330
+So we've done similar things.
+
+20
+00:01:17,970 --> 00:01:20,670
+Let's go ahead and get a collection.
+
+21
+00:01:21,290 --> 00:01:23,170
+Select by attribute node.
+
+22
+00:01:25,130 --> 00:01:27,170
+And plug in the attribute key here.
+
+23
+00:01:32,760 --> 00:01:33,220
+Okay.
+
+24
+00:01:35,120 --> 00:01:36,880
+And again, for the threshold,
+
+25
+00:01:37,160 --> 00:01:39,620
+let's make sure it's greater than 0.5.
+
+26
+00:01:41,610 --> 00:01:44,390
+Now this gives us a vertex selection.
+
+27
+00:01:45,130 --> 00:01:47,590
+And once we plug in the vertex selection here,
+
+28
+00:01:48,190 --> 00:01:52,850
+it's only going to bind spring constraints between the inner surface of the fat
+
+29
+00:01:52,850 --> 00:01:55,570
+into whatever is close to the vertices,
+
+30
+00:01:55,930 --> 00:01:57,110
+to the selected vertices.
+
+31
+00:01:57,650 --> 00:01:58,990
+Let's go ahead and connect that.
+
+32
+00:02:01,550 --> 00:02:03,870
+And the position target stiffness,
+
+33
+00:02:04,110 --> 00:02:05,690
+let's set that to one for now.
+
+34
+00:02:06,750 --> 00:02:08,470
+But radius, let's see 0.5.
+
+35
+00:02:09,290 --> 00:02:10,010
+It's the initial try.
+
+36
+00:02:12,550 --> 00:02:14,630
+At this point, we can also visualize
+
+37
+00:02:26,420 --> 00:02:28,780
+these little red dots.
+
+38
+00:02:28,920 --> 00:02:32,120
+They're pretty short spring constraints.
+
+39
+00:02:33,100 --> 00:02:36,120
+Although it looks like a dot that's a line connecting.
+
+40
+00:02:37,040 --> 00:02:38,220
+Two points.
+
+41
+00:02:39,280 --> 00:02:40,760
+Or two set of vertices.
+
+42
+00:02:41,040 --> 00:02:43,860
+It's a vertex triangle spring constraint.
+
+43
+00:02:46,820 --> 00:02:47,500
+Alright.
+
+44
+00:02:48,040 --> 00:02:51,200
+Let's use this and see what happens in the simulation.
+
+45
+00:02:54,170 --> 00:02:58,010
+Let's go ahead and connect this to terminal.
+
+46
+00:02:59,290 --> 00:03:03,910
+Now you can see we have the whole thing here in the simulation viewport.
+
+47
+00:03:08,020 --> 00:03:09,660
+Check our solver settings.
+
+48
+00:03:15,030 --> 00:03:15,710
+Okay.
+
+49
+00:03:16,490 --> 00:03:19,930
+And create another chaos cache collection.
+
+50
+00:03:26,910 --> 00:03:28,630
+Let's call this one the fat.
+
+51
+00:03:29,870 --> 00:03:30,870
+Cash collection.
+
+52
+00:03:34,830 --> 00:03:35,390
+Alright.
+
+53
+00:03:35,550 --> 00:03:37,790
+Let's start running this and see what happens.
+
+54
+00:03:39,730 --> 00:03:40,730
+Save this.
+
+55
+00:03:42,090 --> 00:03:43,550
+And start the simulation.
+
+56
+00:03:49,670 --> 00:03:50,230
+Alright.
+
+57
+00:03:50,350 --> 00:03:52,370
+We just got back from our simulation results.
+
+58
+00:03:53,330 --> 00:03:54,490
+As you can see,
+
+59
+00:03:55,890 --> 00:03:57,770
+the muscle is bulging.
+
+60
+00:03:58,090 --> 00:04:01,350
+That's because we didn't change our muscle parameter here.
+
+61
+00:04:01,530 --> 00:04:02,990
+So let's go ahead and change that.
+
+62
+00:04:04,390 --> 00:04:05,390
+Over here.
+
+63
+00:04:06,450 --> 00:04:08,470
+Make sure we're using...
+
+64
+00:04:08,990 --> 00:04:10,870
+To use the global parameters.
+
+65
+00:04:14,330 --> 00:04:16,350
+Change the contract volume to two.
+
+66
+00:04:16,670 --> 00:04:17,870
+To see some extra volume.
+
+67
+00:04:20,030 --> 00:04:25,770
+And you also see some penetration between muscles and the fat layer.
+
+68
+00:04:25,770 --> 00:04:33,190
+And that's because the muscle is going through extreme deformation.
+
+69
+00:04:33,490 --> 00:04:34,570
+Or volume increase.
+
+70
+00:04:35,130 --> 00:04:37,510
+And also because of the spring stiffness.
+
+71
+00:04:38,030 --> 00:04:42,210
+So let's go ahead and change the stiffness from one to ten.
+
+72
+00:04:42,490 --> 00:04:43,390
+Let's see if that helps.
+
+73
+00:04:46,530 --> 00:04:47,950
+Now let's run again.
+
+74
+00:04:54,640 --> 00:04:57,120
+Now let's take a look at the simulation results.
+
+75
+00:04:58,760 --> 00:05:00,180
+Let's find a better angle.
+
+76
+00:05:01,880 --> 00:05:05,600
+And you can see the biceps start to bulge.
+
+77
+00:05:06,100 --> 00:05:08,140
+The arm comes up and doing biceps curl.
+
+78
+00:05:09,200 --> 00:05:13,860
+And the fat layer is driven by the muscle deformation underneath it.
+
+79
+00:05:15,660 --> 00:05:16,520
+That's good.
+
+80
+00:05:16,860 --> 00:05:22,400
+And then in the next video, we'll start generating geometry cache from this chaos cache.
+
+81
+00:05:23,240 --> 00:05:24,500
+And then terrain.
+
+82
+00:05:25,280 --> 00:05:28,440
+And I'm a deformer with the geometry cache.
+

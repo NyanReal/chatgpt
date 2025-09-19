@@ -1,0 +1,460 @@
+1
+00:00:01,400 --> 00:00:08,300
+In the last video, we trained an animal deformer that can apply vertex deltas based on pose changes.
+
+2
+00:00:09,280 --> 00:00:12,620
+Now, what if I want to control muscle activation independently?
+
+3
+00:00:13,160 --> 00:00:18,260
+For example, horses sometimes can contract glute muscles while standing still.
+
+4
+00:00:18,980 --> 00:00:24,340
+In the Witcher 4 tech demo, we controlled muscle activation with animation curves.
+
+5
+00:00:24,640 --> 00:00:28,900
+I'm going to show you how to do that by using our email example.
+
+6
+00:00:29,820 --> 00:00:33,900
+So let's go ahead and go back to our email flesh asset.
+
+7
+00:00:35,100 --> 00:00:39,860
+And because we're working with the lower pectoralis and also the bicep,
+
+8
+00:00:39,980 --> 00:00:44,460
+let's go ahead and start creating some animation curves.
+
+9
+00:00:46,180 --> 00:00:49,140
+Let's locate our skin, scalpel mesh.
+
+10
+00:00:50,680 --> 00:00:53,380
+Open that and then click add curve here.
+
+11
+00:00:54,820 --> 00:00:56,840
+So first, let's add the bicep.
+
+12
+00:00:59,080 --> 00:01:01,120
+And also the lower pec.
+
+13
+00:01:03,720 --> 00:01:06,440
+Now we have curves over here.
+
+14
+00:01:10,380 --> 00:01:17,300
+We can go back over here and start reading the curves in the skeletal mesh.
+
+15
+00:01:17,480 --> 00:01:18,820
+So let's go ahead and save this.
+
+16
+00:01:19,900 --> 00:01:25,220
+And back here, let's call a node called read skeletal mesh curves.
+
+17
+00:01:25,220 --> 00:01:33,460
+What this will do is that we'll read the skeletal mesh curves and then save it to our flesh asset to build the connection.
+
+18
+00:01:35,040 --> 00:01:40,060
+So over here, let's give it the skeletal mesh that we just worked on.
+
+19
+00:01:42,040 --> 00:01:45,480
+As we do that, we can import skeletal mesh chains.
+
+20
+00:01:46,180 --> 00:01:50,060
+You can see now two curves has been have been imported.
+
+21
+00:01:50,680 --> 00:01:52,800
+See one is a bicep, one is a lower pec.
+
+22
+00:01:53,900 --> 00:01:56,160
+And make sure we connect collection here.
+
+23
+00:01:56,780 --> 00:02:07,080
+But over here in muscle name, we have to draw the association between the curve and the muscle so that the curve knows which muscle is controlling.
+
+24
+00:02:09,120 --> 00:02:13,160
+We can do that if we grab the muscle mesh.
+
+25
+00:02:14,740 --> 00:02:16,020
+Let's visualize here.
+
+26
+00:02:16,500 --> 00:02:18,240
+Let's first do the bicep.
+
+27
+00:02:18,520 --> 00:02:25,820
+So if you click the bicep, it will show you the name of the mesh in the scene outliner.
+
+28
+00:02:26,060 --> 00:02:28,020
+So let's make sure we grab this one.
+
+29
+00:02:32,050 --> 00:02:37,910
+It's called SKM, email, upper body muscles, split mesh 58, 10, 15, 10.
+
+30
+00:02:40,970 --> 00:02:47,210
+So now if we go to our read skeletal mesh curves, we should be able to see the exact mesh name here.
+
+31
+00:02:49,190 --> 00:02:50,130
+58, 57.
+
+32
+00:02:50,530 --> 00:02:52,350
+So let's make sure we copy that down.
+
+33
+00:02:53,210 --> 00:02:55,770
+And for now, we can only type it in.
+
+34
+00:02:56,490 --> 00:03:01,050
+It's called SKM, email, upper body muscles.
+
+35
+00:03:03,070 --> 00:03:07,530
+Split mesh, 58, 57.
+
+36
+00:03:08,170 --> 00:03:14,830
+So in the future, we should add the feature that will allow us to copy the name directly from the scene outline.
+
+37
+00:03:15,950 --> 00:03:17,770
+So for the bicep, let's do that.
+
+38
+00:03:18,810 --> 00:03:21,290
+And then same thing for the pectoralis.
+
+39
+00:03:24,810 --> 00:03:26,650
+Find it, 28, 27.
+
+40
+00:03:30,320 --> 00:03:31,720
+Let's go back over here.
+
+41
+00:03:32,980 --> 00:03:33,860
+Copy that.
+
+42
+00:03:38,760 --> 00:03:41,240
+And hit 28, 27.
+
+43
+00:03:45,520 --> 00:03:46,280
+Great.
+
+44
+00:03:46,840 --> 00:03:50,620
+And now make sure you click assign skeletal mesh curves to muscles.
+
+45
+00:03:51,800 --> 00:03:56,740
+Now this will build the connection between the animation curve and muscles.
+
+46
+00:03:56,740 --> 00:04:01,100
+So we can go ahead and go in to muscle activation.
+
+47
+00:04:03,380 --> 00:04:10,520
+Now here, you should see the muscle association here.
+
+48
+00:04:10,760 --> 00:04:12,820
+See muscle activation curve name.
+
+49
+00:04:13,080 --> 00:04:15,500
+So each muscle has a curve associated to it.
+
+50
+00:04:17,000 --> 00:04:18,040
+And that's good.
+
+51
+00:04:18,260 --> 00:04:23,040
+Let's connect this back to the terminal so that the flesh asset knows about this information.
+
+52
+00:04:26,250 --> 00:04:32,990
+Now at this point, let's start generating some training animation for the animation curve ML deformer.
+
+53
+00:04:33,330 --> 00:04:42,130
+So if you go to ML deformer, you can notice that for the network inputs, it can either be the bones, which means this is a pose driven ML deformer.
+
+54
+00:04:42,130 --> 00:04:46,850
+Or it could be animation curve that makes this curve driven ML deformer.
+
+55
+00:04:47,010 --> 00:04:52,590
+They both apply deltas to vertices, but the input is different.
+
+56
+00:04:53,070 --> 00:05:01,310
+So think about when you have a curve for the bicep, where you can drag it up and down to control muscle contraction in each pose.
+
+57
+00:05:01,310 --> 00:05:05,510
+And this will be independent from the pose driven ML deformer.
+
+58
+00:05:06,370 --> 00:05:09,950
+So let's go back here and start generating some training animation.
+
+59
+00:05:10,550 --> 00:05:16,410
+The note we'll be calling is called animation or the curve sampling animation asset terminal.
+
+60
+00:05:17,470 --> 00:05:20,310
+Once you grab that, it takes two inputs.
+
+61
+00:05:21,450 --> 00:05:23,470
+One is the sculptal mesh asset.
+
+62
+00:05:24,650 --> 00:05:30,030
+And in this case, it will be the skin that we just worked on.
+
+63
+00:05:30,170 --> 00:05:31,250
+We added two curves to it.
+
+64
+00:05:31,810 --> 00:05:33,830
+It also takes the animation asset.
+
+65
+00:05:34,710 --> 00:05:37,830
+And let's go ahead and duplicate an animation asset.
+
+66
+00:05:40,450 --> 00:05:44,230
+Choose either one and then it's duplicated.
+
+67
+00:05:50,300 --> 00:05:56,640
+And I can call this one the activation training data.
+
+68
+00:06:00,240 --> 00:06:00,980
+Awesome.
+
+69
+00:06:01,720 --> 00:06:02,380
+Let's save this.
+
+70
+00:06:02,880 --> 00:06:06,480
+Then now over here, let's assign the animation asset.
+
+71
+00:06:07,320 --> 00:06:08,760
+Choose the training data.
+
+72
+00:06:09,900 --> 00:06:18,240
+And the purpose of this node is that it will generate some training data and stuff that into this animation asset.
+
+73
+00:06:18,240 --> 00:06:19,960
+So we won't modify it, basically.
+
+74
+00:06:20,100 --> 00:06:22,660
+That's why we duplicated the animation asset.
+
+75
+00:06:23,540 --> 00:06:30,040
+And for each muscle or each curve, it will generate this number of frames training data.
+
+76
+00:06:30,940 --> 00:06:40,120
+So for now, let's select 30 frame rate and then let's do 20 frames per curve.
+
+77
+00:06:40,720 --> 00:06:46,660
+And then if we evaluate this, we should have the animation asset ready.
+
+78
+00:06:46,660 --> 00:06:49,900
+So here you can see we have two curves.
+
+79
+00:06:50,380 --> 00:06:59,900
+And then each curve is basically ranging from 0 to 1 in its assigned slot, which is 0 to 20 for the bicep.
+
+80
+00:07:00,020 --> 00:07:02,740
+And then 20 to 40 for the lower pectoralis.
+
+81
+00:07:04,220 --> 00:07:13,620
+So after that, we can start generating some simulation data on this specific training animation.
+
+82
+00:07:13,620 --> 00:07:18,800
+So let's go ahead and do that by setting the animation to the training data one.
+
+83
+00:07:20,700 --> 00:07:25,000
+And in this case, it will be 40 frames.
+
+84
+00:07:27,920 --> 00:07:32,200
+So that would be roughly 1.34 seconds.
+
+85
+00:07:35,360 --> 00:07:41,020
+And then we need to create a new chaos cache collection.
+
+86
+00:07:42,620 --> 00:07:47,120
+I'll call this one activation training chaos cache collection.
+
+87
+00:07:48,600 --> 00:07:49,380
+All right.
+
+88
+00:07:49,640 --> 00:07:54,060
+And the last thing we need to remember is that for deactivation.
+
+89
+00:07:54,420 --> 00:07:57,220
+Now, before we were doing length based muscle activation.
+
+90
+00:07:57,220 --> 00:08:02,260
+Basically, you contract muscles whenever the muscles get shorter because of the animation.
+
+91
+00:08:02,700 --> 00:08:09,100
+Now we want to turn that off, but instead override muscle activation animation curves.
+
+92
+00:08:09,940 --> 00:08:11,620
+Make sure you turn that on.
+
+93
+00:08:13,980 --> 00:08:17,240
+And now it looks good.
+
+94
+00:08:17,740 --> 00:08:20,980
+Make sure we save this and start running the simulation.
+
+95
+00:08:26,260 --> 00:08:28,740
+Okay, we just finished our simulation.
+
+96
+00:08:29,320 --> 00:08:31,260
+Now let's look at the simulation results.
+
+97
+00:08:31,420 --> 00:08:34,780
+You can see from 0 to 20, the bicep starts to contract.
+
+98
+00:08:35,220 --> 00:08:37,220
+So it contracts and then it goes off.
+
+99
+00:08:37,340 --> 00:08:39,380
+And then there's a lower pectoralis.
+
+100
+00:08:39,920 --> 00:08:41,760
+But this is exactly what we want.
+
+101
+00:08:42,000 --> 00:08:44,540
+And notice that there's no pose change at all.
+
+102
+00:08:44,700 --> 00:08:48,240
+We're just using the stationary pose or the wrist pose.
+
+103
+00:08:49,000 --> 00:08:52,700
+And that's enough to train the curved German M-O-deformer.
+
+104
+00:08:52,700 --> 00:09:01,480
+So let's use this simulation data and generate a geometry cache.
+
+105
+00:09:02,500 --> 00:09:03,380
+I'll be here.
+
+106
+00:09:03,600 --> 00:09:05,500
+Let's make sure we create a new geometry cache.
+
+107
+00:09:06,860 --> 00:09:07,620
+That's good.
+
+108
+00:09:08,640 --> 00:09:10,680
+And then generate a geometry cache of the skin.
+
+109
+00:09:11,300 --> 00:09:14,700
+We're going to use the geometry cache to train that M-O-deformer.
+
+110
+00:09:16,760 --> 00:09:17,280
+Awesome.
+
+111
+00:09:17,540 --> 00:09:18,160
+There we go.
+
+112
+00:09:18,400 --> 00:09:19,540
+Now this is the skin.
+
+113
+00:09:19,780 --> 00:09:22,280
+You see the bicep contracts and then the lower pec contracts.
+
+114
+00:09:22,280 --> 00:09:23,460
+Okay.
+
+115
+00:09:23,460 --> 00:09:23,500
+Okay.
+

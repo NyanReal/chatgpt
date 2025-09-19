@@ -1,0 +1,404 @@
+1
+00:00:01,400 --> 00:00:13,480
+In the last video, we extracted only the bicep for faster simulation tests, and then we explored the effects of the muscle parameters in the set muscle activation parameter node.
+
+2
+00:00:14,080 --> 00:00:19,980
+Now let's go ahead and start setting up our fat layer and start running our fat layer simulation.
+
+3
+00:00:21,040 --> 00:00:24,220
+Let's find our static mesh fat layer first.
+
+4
+00:00:26,480 --> 00:00:31,160
+If you look at this, this contains over a million vertices.
+
+5
+00:00:31,580 --> 00:00:34,280
+That's really a high count of vertices.
+
+6
+00:00:34,740 --> 00:00:37,760
+So let's go ahead and start down sampling it first.
+
+7
+00:00:38,400 --> 00:00:40,700
+And do that by duplicated.
+
+8
+00:00:42,300 --> 00:00:45,600
+And I'm going to rename this as a low res version.
+
+9
+00:00:48,650 --> 00:00:50,190
+Make sure to save this.
+
+10
+00:00:51,410 --> 00:00:55,970
+And then now we can leave this in the environment by dragging it out.
+
+11
+00:00:57,950 --> 00:00:59,450
+Press F to zoom in.
+
+12
+00:01:01,630 --> 00:01:04,390
+Now over here, we can go into the modeling mode.
+
+13
+00:01:06,050 --> 00:01:12,870
+This will open up a menu of tools, and we want to go to mesh, then simplify.
+
+14
+00:01:17,000 --> 00:01:25,600
+For the options, for the simplifier type, let's go ahead and select existing positions and target mode.
+
+15
+00:01:25,900 --> 00:01:35,740
+Let's select vertex count because we have an ideal vertex count in mind, which is to 20,000 vertex count.
+
+16
+00:01:37,100 --> 00:01:43,800
+And make sure you select discard attributes, otherwise it wouldn't work on this example.
+
+17
+00:01:44,520 --> 00:01:50,300
+And now you can see the resolution became much more coarse.
+
+18
+00:01:50,620 --> 00:01:52,400
+And that's exactly what I want.
+
+19
+00:01:54,580 --> 00:01:56,040
+Make sure you hit accept.
+
+20
+00:01:57,700 --> 00:01:58,300
+Make sure you hit accept.
+
+21
+00:01:58,300 --> 00:01:59,080
+Now there it is.
+
+22
+00:01:59,240 --> 00:02:01,980
+We have our low res version of the fat layer.
+
+23
+00:02:02,880 --> 00:02:04,380
+Make sure you save this.
+
+24
+00:02:05,280 --> 00:02:11,000
+And now, let's go ahead and create a tetrahedral mesh for the fat layer only.
+
+25
+00:02:11,800 --> 00:02:16,360
+You can do that by creating another flesh acid.
+
+26
+00:02:17,980 --> 00:02:25,840
+And similar to the tet mesh muscle one, let's call this tet mesh fat flesh acid.
+
+27
+00:02:27,220 --> 00:02:29,020
+Create a new data flow graph.
+
+28
+00:02:30,760 --> 00:02:31,920
+Make sure you save.
+
+29
+00:02:33,140 --> 00:02:36,760
+And now we have a brand new flesh acid.
+
+30
+00:02:37,280 --> 00:02:44,160
+Before I do anything, let's make sure I create a new folder called tet mesh.
+
+31
+00:02:46,300 --> 00:02:53,240
+Now let's make sure we drag the tet mesh versions of things in here so that we don't touch it anymore.
+
+32
+00:02:53,560 --> 00:02:57,960
+We want to avoid accidental revaluation of the graph.
+
+33
+00:02:59,220 --> 00:02:59,900
+All right.
+
+34
+00:03:00,780 --> 00:03:06,520
+Now let's go to the tet mesh and start bringing in the fat layer.
+
+35
+00:03:07,100 --> 00:03:09,020
+You can do that by calling static mesh.
+
+36
+00:03:11,860 --> 00:03:15,300
+And here is our low res version of the fat layer.
+
+37
+00:03:16,420 --> 00:03:20,660
+Let's convert this to a collection by calling static mesh to collection.
+
+38
+00:03:23,760 --> 00:03:28,680
+Now you can see there is our converted fat layer.
+
+39
+00:03:29,460 --> 00:03:32,520
+You can also view the vertices here.
+
+40
+00:03:32,680 --> 00:03:35,640
+You can see it has exactly 20,000 vertices.
+
+41
+00:03:36,540 --> 00:03:38,540
+This is our downsampled version.
+
+42
+00:03:39,740 --> 00:03:46,840
+And after that, let's make a tetrahedral mesh from this by calling create tetrahedron node.
+
+43
+00:03:49,420 --> 00:03:51,260
+In this case, let's go to tet wild.
+
+44
+00:03:52,260 --> 00:03:54,300
+Set next generation to 20.
+
+45
+00:03:55,120 --> 00:04:04,560
+And in this case, we do want the fat layer or the tet mesh of the fat layer to be very close to the input surface.
+
+46
+00:04:04,820 --> 00:04:08,800
+In that case, we want this epsilon value to be low.
+
+47
+00:04:09,860 --> 00:04:14,620
+So let's add a one zero to make it much lower.
+
+48
+00:04:15,540 --> 00:04:18,020
+And then make sure you check the corset box.
+
+49
+00:04:18,780 --> 00:04:22,060
+Now we can start evaluating this node.
+
+50
+00:04:22,420 --> 00:04:23,740
+It's going to take a while.
+
+51
+00:04:28,770 --> 00:04:29,470
+All right.
+
+52
+00:04:29,590 --> 00:04:31,810
+Now we just got back from our node evaluation.
+
+53
+00:04:32,150 --> 00:04:34,130
+The whole process took about 10 minutes.
+
+54
+00:04:34,450 --> 00:04:39,410
+Let's go ahead and create a flesh asset terminal to save this into a flesh asset.
+
+55
+00:04:41,430 --> 00:04:45,670
+Now make sure you save the flesh asset or the deal flow graph.
+
+56
+00:04:46,630 --> 00:04:49,150
+Now let's go back to our muscle setup.
+
+57
+00:04:49,970 --> 00:04:54,170
+And let's import the fat layer tetrahedral mesh.
+
+58
+00:04:55,510 --> 00:04:56,870
+We've done this before.
+
+59
+00:04:58,410 --> 00:05:01,770
+Let's go ahead and create a get flesh asset node.
+
+60
+00:05:02,370 --> 00:05:06,350
+And then import our fat tetrahedral mesh here.
+
+61
+00:05:07,630 --> 00:05:10,490
+There is our fat layer tetrahedral mesh.
+
+62
+00:05:13,310 --> 00:05:21,630
+For the sake of the tutorial, let's group the set of the flow nodes from the last tutorial.
+
+63
+00:05:22,390 --> 00:05:28,270
+And if we select that, we can type C to bring out a comment box.
+
+64
+00:05:30,230 --> 00:05:35,650
+And let's call this muscle simulation test.
+
+65
+00:05:37,850 --> 00:05:40,750
+Once we have them grouped, we can drag them around.
+
+66
+00:05:41,750 --> 00:05:54,990
+And let's go ahead and connect this back to the terminal so that we can bypass the simulation test nodes that we created last time.
+
+67
+00:05:57,010 --> 00:06:05,190
+Now at this point, since we just have the fat layer here, let's assign some mass and stiffness.
+
+68
+00:06:07,530 --> 00:06:10,210
+Let's call get fleshDefaultProperties.
+
+69
+00:06:13,620 --> 00:06:22,520
+For this example, let's set density to be 100 and vertex stiffness to be 10,000.
+
+70
+00:06:26,680 --> 00:06:36,760
+We want the density and the stiffness to be lower than the muscles because we want the muscles to mainly drive the fat layer instead of the other way around.
+
+71
+00:06:37,640 --> 00:06:43,620
+And eventually, the muscle deformation will propagate to the fat layer.
+
+72
+00:06:44,600 --> 00:06:49,560
+Once we have that, let's combine the muscles over here and also the fat here.
+
+73
+00:06:50,220 --> 00:06:54,220
+We call an append-hedral collection node.
+
+74
+00:06:57,700 --> 00:07:02,280
+Now let's connect the collection over here.
+
+75
+00:07:04,720 --> 00:07:06,740
+Now you can see everything is combined.
+
+76
+00:07:13,300 --> 00:07:18,660
+Now at this point, we need to bind some spring constraints.
+
+77
+00:07:19,980 --> 00:07:21,500
+So we've done that before.
+
+78
+00:07:21,500 --> 00:07:26,580
+It's called set vertex triangle position target binding.
+
+79
+00:07:27,480 --> 00:07:37,180
+However, in this case, we want to select a group of vertices to bind to the muscles.
+
+80
+00:07:37,180 --> 00:07:40,600
+So we only want the inner surface of the fat layer.
+
+81
+00:07:40,800 --> 00:07:42,740
+So remember, the fat layer is a thin layer.
+
+82
+00:07:42,860 --> 00:07:44,120
+It's a closed surface.
+
+83
+00:07:44,420 --> 00:07:50,780
+So we only want the inside vertices to bind to the muscles.
+
+84
+00:07:52,040 --> 00:07:55,700
+So we can do that by constructing a vertex selection.
+
+85
+00:07:58,140 --> 00:08:01,360
+Let's go ahead and start painting on the fat layer.
+
+86
+00:08:01,700 --> 00:08:06,420
+And then transfer it to the inner side of the fat layer tetrapetal mesh.
+
+87
+00:08:08,320 --> 00:08:20,000
+The thing we want to do is bring in the set mesh against the low-res fat layer and convert it to a collection.
+
+88
+00:08:23,600 --> 00:08:26,320
+And now at this point, we can start painting on it.
+
+89
+00:08:32,950 --> 00:08:37,190
+So as you can see, we have the fat layer here.
+
+90
+00:08:37,930 --> 00:08:39,470
+Let's use the brush tool.
+
+91
+00:08:39,770 --> 00:08:41,570
+Set the strength to one.
+
+92
+00:08:42,810 --> 00:08:48,110
+And make sure we have the visibility filter because we...
+
+93
+00:08:48,110 --> 00:08:54,350
+The idea is we want to paint on the outer surface and then invert it so that we have the inner surface.
+
+94
+00:08:54,350 --> 00:08:56,950
+So let's go ahead and paint on the outer surface.
+
+95
+00:09:07,170 --> 00:09:07,750
+All right.
+
+96
+00:09:07,910 --> 00:09:12,230
+We just took a few minutes to paint this outer surface of the fat layer.
+
+97
+00:09:12,490 --> 00:09:18,490
+And now after that, we can invert the current surface so that it now...
+
+98
+00:09:18,490 --> 00:09:19,790
+We inverted the selection.
+
+99
+00:09:20,390 --> 00:09:24,130
+Then now we have a selection of the internal surface.
+
+100
+00:09:25,530 --> 00:09:26,230
+That's good.
+
+101
+00:09:26,650 --> 00:09:28,310
+Make sure we save this.
+
