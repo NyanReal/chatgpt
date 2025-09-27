@@ -1,0 +1,92 @@
+<Window x:Class="SubtitleToolkit.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SubtitleToolkit.ViewModels"
+        mc:Ignorable="d"
+        Title="Subtitle Toolkit" Height="720" Width="1100">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="불러오기" Command="{Binding LoadFileCommand}" Margin="0,0,8,0" />
+            <Button Content="다시 불러오기" Command="{Binding ReloadFileCommand}" Margin="0,0,8,0" />
+            <Button Content="저장" Command="{Binding SaveFileCommand}" Margin="0,0,12,0" />
+            <TextBlock Text="{Binding SourcePath}" Margin="0,0,0,0" VerticalAlignment="Center" />
+            <TextBlock Text="총 자막: " Margin="24,0,0,0" VerticalAlignment="Center" />
+            <TextBlock Text="{Binding CueCount}" FontWeight="Bold" VerticalAlignment="Center" />
+        </StackPanel>
+        <Grid Grid.Row="1" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <DataGrid AutoGenerateColumns="False"
+                      ItemsSource="{Binding Cues}"
+                      SelectedItem="{Binding SelectedCue}"
+                      Grid.Column="0" Margin="0,0,0,8"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      SelectionMode="Extended">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="번호" Binding="{Binding Index}" Width="60" />
+                    <DataGridTextColumn Header="시작" Binding="{Binding Start, StringFormat=\{0:hh\:mm\:ss\,fff\}}" Width="120" />
+                    <DataGridTextColumn Header="종료" Binding="{Binding End, StringFormat=\{0:hh\:mm\:ss\,fff\}}" Width="120" />
+                    <DataGridTextColumn Header="텍스트" Binding="{Binding Text}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <TabControl Grid.Column="1">
+                <TabItem Header="표시 시간 조정">
+                    <StackPanel Margin="12">
+                        <TextBlock Text="읽기 속도 기준(초당 글자 수)" />
+                        <TextBox Text="{Binding CharactersPerSecond, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="0,4,0,8" />
+                        <TextBlock Text="최소 표시 시간(밀리초)" />
+                        <TextBox Text="{Binding MinimumDurationMs, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="0,4,0,8" />
+                        <TextBlock Text="최소 간격(밀리초)" />
+                        <TextBox Text="{Binding MinimumGapMs, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="0,4,0,12" />
+                        <Button Content="표시 시간 늘리기" Command="{Binding StretchDurationsCommand}" Width="160" Margin="0,0,0,12" />
+                        <TextBlock Text="짧은 자막 수" />
+                        <TextBlock Text="{Binding ShortCueCount}" FontWeight="Bold" Margin="0,4,0,0" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="문장/어절 분할">
+                    <StackPanel Margin="12">
+                        <TextBlock Text="문장 길이 상한(공백 제외)" />
+                        <TextBox Text="{Binding MaxCharactersPerCue, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="0,4,0,8" />
+                        <TextBlock Text="문장 분할 길이(문장 기준 적용 불가 시)" />
+                        <TextBox Text="{Binding MaxCharactersPerWordSplit, UpdateSourceTrigger=PropertyChanged}" Width="120" Margin="0,4,0,12" />
+                        <Button Content="문장 기준 분할" Command="{Binding SplitCuesCommand}" Width="160" Margin="0,0,0,12" />
+                        <TextBlock Text="최근 분할 결과" FontWeight="Bold" />
+                        <ItemsControl ItemsSource="{Binding LastSplitSummary}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="검토">
+                    <StackPanel Margin="12">
+                        <TextBlock Text="짧은 자막 목록" FontWeight="Bold" />
+                        <ListBox ItemsSource="{Binding ShortCueDiagnostics}" Margin="0,4,0,12" />
+                        <Button Content="짧은 자막 다시 계산" Command="{Binding RefreshDiagnosticsCommand}" Width="200" />
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}" />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
